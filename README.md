@@ -10,7 +10,7 @@ comparisons are exact primitives; no polynomial bit-complexity claim is made.
 
 ## Build and verify
 
-Install [Elan](https://github.com/leanprover/elan), Python 3 and Git, then run:
+Install [Elan](https://github.com/leanprover/elan), Python 3, Bash and Git, then run:
 
 ```sh
 lake exe cache get
