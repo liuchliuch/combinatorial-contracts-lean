@@ -1,0 +1,63 @@
+{
+  "status": "COMPLETE",
+  "observed_completed_utc": "2026-10-03T10:16:00Z",
+  "source_paper": "https://arxiv.org/abs/2609.35803v1",
+  "source_inventory": "docs/release-candidate/source-inventory.json",
+  "source_inventory_sha256": "e0c21c7deeb2f91f6b7c88e46f8918fbc2755ed1af9f154c9972567e0ac68f30",
+  "coverage": {
+    "numbered_source_results": 10,
+    "ledger_numbered_entries": 11,
+    "supporting_obligations": 34,
+    "project_source_modules": 27,
+    "audited_project_declarations": 1640,
+    "audited_origin_modules": 27
+  },
+  "semantic_review": {
+    "all_paper_results_accepted": true,
+    "certificate": "docs/release-candidate/semantic-certificate.json",
+    "sha256": "d379c8f87666511826299a1b3dcaecc3eb80a5f833448187f824bcccdeb5dc9c",
+    "supplementary_lower_review": "docs/independent-lower-bound-review.md",
+    "supplementary_sha256": "2360c2ce2b6deed26c8f4cf562a3d46dd79f3291c99e11b606832b6cbb25b811"
+  },
+  "mechanical": {
+    "release_script_exit_code": 0,
+    "clean_project_build": "PASS: 7379 Lake jobs",
+    "origin_complete_transitive_axiom_audit": "PASS: 1640 declarations across 27 modules, including private/generated/off-namespace constants",
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "trust_zero_all_import_replay": "PASS",
+    "forbidden_source_tokens": [],
+    "source_hash_validation": "PASS: 51 frozen files",
+    "pinned_package_validation": "PASS: 9 clean tracked package trees",
+    "regression_cases": 642,
+    "extra_endpoint_checks": 1,
+    "regression_note": "Supplementary tests, not proof premises"
+  },
+  "commands": [
+    "lake clean combinatorial-contracts",
+    "lake build CombinatorialContracts",
+    "lake env lean scripts/AxiomAudit.lean",
+    "lake env lean --trust=0 scripts/ReleaseChecks.lean",
+    "python scripts/semantic_checks.py",
+    "python scripts/snapshot.py --verify"
+  ],
+  "log_sha256": {
+    "logs/release-clean-build.log": "370d5bade7d55a5ef1bde8220becf325b0d062d6da59f5c3a561747a69f60279",
+    "logs/release-origin-axioms.log": "7adbbe4e7ac329dfdef0bdbda54c1bed9ec5607d05e65c76a164595714dc63ae",
+    "logs/release-trust-zero-allimports.log": "966c5bba307f4e788d3672c634061f97155c9b369604495d78df11b9f1fb2d74",
+    "logs/release-semantic-regression.json": "6ca2a107be3bc8ac80c8c4007303930721437a0332ab4a0e98ee2d7cb4fab3bd",
+    "logs/release-original-validation.log": "c7a5fa03b2aef8e399cc69fa0d7708eed4616e0d10ae7822df9ba7c3df93e555",
+    "logs/release-final-source-validation.json": "a15ba21b50da887cdbd2eeeb06f32c76be9d6878b934be79b7ec3f3b06d488fc",
+    "logs/release-source-preflight.json": "34e720d259f9d65954f96eca811e2658c34a5bc39dbda3d6c7c5bb6581b45360"
+  },
+  "scope": [
+    "Exact-real oracle-query complexity, not bit complexity.",
+    "Randomized terminating query algorithms, including history strategies halting on the actual finite hard family and unbounded/infinite expectations across seeds.",
+    "Positive-probability nonterminating actual-family failure executions are not separately modeled.",
+    "Original target statements unchanged; cited-source zero-cost endpoint corrected by the target restricted hard family; per-action welfare charging is an accepted alternative derivation."
+  ],
+  "portability": "Source-only; no local dependency symlinks or caches required. See docs/BOOTSTRAP.md for fresh pinned installation and reuse instructions."
+}

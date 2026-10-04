@@ -1,0 +1,12 @@
+{
+  "exact_finite_algorithm_cases": 360,
+  "equal_revenue_perturbations": 30,
+  "shifted_grid_closed_bound_equality": {
+    "q": "3/4",
+    "delta_star": "3/4",
+    "delta": "27/64"
+  },
+  "robust_inconsistent_oracle_cases": 240,
+  "all_set_tightness_cases": 12,
+  "status": "PASS; regression only, not formal completeness"
+}

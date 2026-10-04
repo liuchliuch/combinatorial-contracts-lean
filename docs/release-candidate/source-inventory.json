@@ -1,0 +1,116 @@
+{
+  "packages": [
+    {
+      "commit": "f897ebcf72cd16f89ab4577d0c826cd14afaafc7",
+      "name": "mathlib",
+      "tracked_worktree_clean": true,
+      "tree": "cc75da45fdf688428e8428881ac939b8ec11001b"
+    },
+    {
+      "commit": "dfd06ebfe8d0e8fa7faba9cb5e5a2e74e7bd2805",
+      "name": "plausible",
+      "tracked_worktree_clean": true,
+      "tree": "efef3022ea632ae758f051419d2436430bec0d11"
+    },
+    {
+      "commit": "99657ad92e23804e279f77ea6dbdeebaa1317b98",
+      "name": "LeanSearchClient",
+      "tracked_worktree_clean": true,
+      "tree": "7cdcb52de1c022771e1e2e3c65c48114ddde714d"
+    },
+    {
+      "commit": "d768126816be17600904726ca7976b185786e6b9",
+      "name": "importGraph",
+      "tracked_worktree_clean": true,
+      "tree": "3fa3bc327b11ff91d430d4a66e473adf59c67374"
+    },
+    {
+      "commit": "556caed0eadb7901e068131d1be208dd907d07a2",
+      "name": "proofwidgets",
+      "tracked_worktree_clean": true,
+      "tree": "18c3d4d0a9af448c6ab0e9bd8e7e36212ac0afa1"
+    },
+    {
+      "commit": "725ac8cd67acd70a7beaf47c3725e23484c1ef50",
+      "name": "aesop",
+      "tracked_worktree_clean": true,
+      "tree": "d39ece512df321373f81eb3167872e375fbc5bd2"
+    },
+    {
+      "commit": "dea6a3361fa36d5a13f87333dc506ada582e025c",
+      "name": "Qq",
+      "tracked_worktree_clean": true,
+      "tree": "294dfa7ecb74bee2d19612343a6d79328f589673"
+    },
+    {
+      "commit": "8da40b72fece29b7d3fe3d768bac4c8910ce9bee",
+      "name": "batteries",
+      "tracked_worktree_clean": true,
+      "tree": "b12fd575b2bf00c1038332b4a48636079d3fe6fe"
+    },
+    {
+      "commit": "91c18fa62838ad0ab7384c03c9684d99d306e1da",
+      "name": "Cli",
+      "tracked_worktree_clean": true,
+      "tree": "3feddd3f45bc0688b42182e7c2e860005abd3961"
+    }
+  ],
+  "sources": {
+    "CombinatorialContracts.lean": "0e8502700e8d25fbc0d60761df6cdb340b296c398f5b069aabbbfdbb00bac6f4",
+    "CombinatorialContracts/Algorithm.lean": "0c5359c276d384961bc2844f9e559ddb72816c43ec236191dd53a219f42be6b6",
+    "CombinatorialContracts/ChainEnvelope.lean": "5dd17825f879cf8fd40229cb61cf904263ca2c51722aa35e30326352216c3324",
+    "CombinatorialContracts/ChainRealization.lean": "b1c63bab821e9ea1390e191207ff2510e1e851e46daedf314d5d414f45c9bf02",
+    "CombinatorialContracts/EndpointRegression.lean": "dd97d803f1605f92b9fcf09d48987cf3f4624901dca0000a71168a4d4f3dd930",
+    "CombinatorialContracts/EqualRevenue.lean": "730ad85f9cf5d9430313cff56aef354d28539d3646cc62179a666f276e8a5997",
+    "CombinatorialContracts/FiniteEnvelope.lean": "678e02a1290d72eef5975cd11ac6efb9e16e30cfe16dba45a8b690eecb564d27",
+    "CombinatorialContracts/Geometric.lean": "5486c84abee93a1a77d38dada07d0a75118f23cfd1b4d90756ce054c14f3bac7",
+    "CombinatorialContracts/LowerBoundAsymptotics.lean": "62a71011c1af6e92cc93ff37b4dade4b23eb2fb5153f0c55180e81a257205449",
+    "CombinatorialContracts/LowerBoundProgram.lean": "62e77aa480df6ac2e61d7b96db9b8baa8ce109abcf3cfa791dca7f8a5fb831ce",
+    "CombinatorialContracts/LowerBoundStrategy.lean": "f2e2cca3210749b28854a2a6e4d234574662002fef834cdcc2589b25d33bfb5d",
+    "CombinatorialContracts/LowerBounds.lean": "1e6569d98118494d7b96340a5a83d7216b01560462fb194a3346a4cc6f3dd99c",
+    "CombinatorialContracts/MainLowerBound.lean": "388d2bdaa85dafb5c531f396ab52217ce78a5bdf5ea077a40d70199c02d57523",
+    "CombinatorialContracts/Model.lean": "2a89c3c567fd77906bc84e18ea84e0f8477e5f93130333ef01a1fa0d70b9fd7e",
+    "CombinatorialContracts/OracleIdentification.lean": "518f621b52c9e1ccbd485ed9630cae344000403ecaf764c829dda5147093f89f",
+    "CombinatorialContracts/OracleProgram.lean": "cd5a57d5e75105c19dc9523b06918167978ccc8a590b5ae5633f01f2dd9444c8",
+    "CombinatorialContracts/PaperScale.lean": "f07d3316b79ce8e458c236bc696b9bd9e3bcda690060c31fd0496b00a346bfae",
+    "CombinatorialContracts/PaperStatements.lean": "7504c25579df2364873e1eb6d519be200d4147c22b09093af2d1e07279160899",
+    "CombinatorialContracts/RobustOracleProgram.lean": "95bb22fc4a4dc3bb8d5c37a9b006756e8bb02c9d4584ccfd04475ed442183eae",
+    "CombinatorialContracts/Robustness.lean": "623c2659acae31325b96bb07e4dc028da8f597d98b29df0f6df2c992eacfc748",
+    "CombinatorialContracts/Scale.lean": "52cd372916c819d7b4ed589b7d6f67af53d6132c7bb534c0e5d18e59f0055b56",
+    "CombinatorialContracts/Scaling.lean": "8eaa8456133517c3711a3365e888ebe2dd6399784d98d3e11e6acd65d46ea58e",
+    "CombinatorialContracts/SharpSparseSupply.lean": "74065bda388bdc03563bf30c759166a8abffc494a55c8eb9a92456dc34912e2c",
+    "CombinatorialContracts/SparseSupply.lean": "66c1b6ef26068e1b953860f05fc053080a20f0bc852394627b648e56458d72ef",
+    "CombinatorialContracts/SupplyProgram.lean": "d3ca0f786dad443f2b16adbbdc0744d88fb3866db2afe93dcbca7ead1b25fb77",
+    "CombinatorialContracts/SupplySimulation.lean": "e56799591d43b46525cd6f47d6d695f49a905420993d5da3685d3bcd777647e2",
+    "CombinatorialContracts/Tightness.lean": "aca7a816ce094aebc0af8d05eff2d6b53ff546c595ed003d36f331c87e7f42f5",
+    "CombinatorialContracts/Welfare.lean": "d5f315d90bdb3a963f28ae4c98ec35e1c0f7796ca8e02312d233ec4b447b7911",
+    "docs/theorem-ledger.json": "128e2bb878304da1a002d8616f831bb4004a1b789d5b12e1531bda937cb8a36e",
+    "lake-manifest.json": "e01c30d8abb6291f4c84428bbd456339aa6123c873c1681148a3050f7f12a809",
+    "lakefile.toml": "99b5c0ffb6d5d5409e206dc4fb9eb7378d8c6b44f51c42e960238a6c60675df3",
+    "lean-toolchain": "42779d67b81608af8a12aa4328d2ab47ca201925b3b2bd68369587b5340bb434",
+    "originals/SHA256SUMS": "2f965775db3999394c929a017cc0fad2b808f9fa8d91734ae30f9f7af79ddb9f",
+    "originals/arxiv-2609.35803v1-source.tar": "f023a1b0f9087f1e9c5bb7b8269339f107182ee714d3b72f5d16338d43aa639c",
+    "originals/arxiv-2609.35803v1.pdf": "19a6f175e30231baeee6783097744aa91427aa9c7b34e277354cfb06f5829512",
+    "originals/dependencies/dfgr26/SHA256SUMS": "b0f4ef8caa4ff36865ff004a31930115c5fe4af4b3158ca4acf982f1c09e538e",
+    "originals/dependencies/dfgr26/arxiv-2403.09794v2-source.tar": "94f71afc5c0c74fde931b83c378a5ce6d75e1ac1104bbac06bad5919eb3f6d95",
+    "originals/dependencies/dfgr26/tex/00README.json": "cb328cc867dcf0aa6b3cbb5da5f9ca769f26339acae63bff927cecc452791f0b",
+    "originals/dependencies/dfgr26/tex/arxiv_25112025.tex": "076fb5325a5ff0dc7ba26db3349720ae9527136ce851ca3cd749746f63121f48",
+    "originals/dependencies/dfgr26/tex/refs.bib": "d4d0a16762f7a2cc55f222080f54465cc46ce000874c79b1318bee2e0a907a8d",
+    "originals/paper.txt": "d5a762c83d69c9964ca261f77a8c3d0ad0f01e72951463095acd536b38929267",
+    "originals/tex/00README.json": "ab6bafcb30f1f1e3113a82f1d2b5941fe5b2937ad1b3a078a1fce9c3212905c4",
+    "originals/tex/77-Approximating_Combinatorial_Contracts_with_Arbitrary_Costs.tex": "40a5d6ce804d6893687c2f8875f866dc3802765059f4c2f4ea1769fdb1c1c7e7",
+    "scripts/AxiomAudit.lean": "c314d77f7221937021b6b306fa6a6589c14fe3c1bc187b81ffa847d8dbf35c6a",
+    "scripts/ReleaseChecks.lean": "93bf2d9b3b8d499e7e60407157378c25f630b0229212214789de6f3aff0360f7",
+    "scripts/check_project.py": "60f52ac6f13554b9e8037b496075430fe64e10df963e1e9e2ab1b48174b02b0a",
+    "scripts/checkpoint.sh": "9242af1cff0f116cc76d071fe1e599b65ac04f9fd0036ca50ea06f74e8535c64",
+    "scripts/release_verify.sh": "79c92395e738ab63085534ce7c9886c831a22dd73aad54a090cb7c125fa28d62",
+    "scripts/semantic_checks.py": "82bce9fc5ea4abbeccaf98f1a4c46f7ee214a535744e99c50be7c5abb451317a",
+    "scripts/snapshot.py": "c8fe238b8c8981cb48a9463f68d60745be35741e40c1682c548839774e079b26",
+    "scripts/verify.sh": "acb792ee8e101c59ad14bea94a6d357fc2ba7f3d05624b13feaa677dacb4bc74"
+  },
+  "toolchain": {
+    "git_hash": "797c613eb9b6d4ec95db23e3e00af9ac6657f24b",
+    "lean_binary_sha256": "8fadc3ed92cc9decb94c96ee9c0876e91e03a3a5e69138f32114f02789e2766c",
+    "version": "Lean (version 4.24.0, x86_64-unknown-linux-gnu, commit 797c613eb9b6d4ec95db23e3e00af9ac6657f24b, Release)"
+  }
+}

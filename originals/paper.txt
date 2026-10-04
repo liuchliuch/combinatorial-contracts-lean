@@ -1,0 +1,921 @@
+                                                 Approximating Combinatorial Contracts with
+                                                              Arbitrary Costs
+                                                                    Xiaotie Deng1,2∗ Hanyu Li2† Chenghua Liu3‡
+                                                       1
+                                                           Department of Computer Science, City University of Hong Kong
+                                                              2
+                                                                CFCS, School of Computer Science, Peking University
+arXiv:2609.35803v1 [cs.GT] 18 Sep 2026
+
+
+
+
+                                                                3
+                                                                  Institute of Software, Chinese Academy of Sciences
+
+
+
+                                                                                          Abstract
+                                                      We study single-agent combinatorial contracts under linear payments. Under a reward
+                                                 share α ∈ [0, 1], an agent chooses a subset S of n hidden actions, generating reward f (S)
+                                                 at cost c(S), to maximize αf (S) − c(S), while the principal receives (1 − α)f (S). For
+                                                 nonnegative additive rewards and monotone supermodular costs, Dütting et al. (SODA
+                                                 2026) proved an exponential supply-query lower bound for exact optimization and left
+                                                 open whether a representation-independent approximation is possible. We resolve this
+                                                 question in a stronger form, removing all structural assumptions on the cost function: for
+                                                 nonnegative additive rewards, arbitrary normalized nonnegative set costs, and every ε ∈
+                                                 (0, 1), we give a deterministic (1 − ε)-approximation using O(n log(n + 1)/ε) supply queries,
+                                                 with query complexity independent of numerical bit lengths and breakpoint separation.
+                                                 More generally, the same guarantee and asymptotic query complexity hold for normalized
+                                                 monotone subadditive rewards and arbitrary normalized nonnegative costs under exact
+                                                 best-response and value-query access. The key idea is a cost-independent, reward-side scale
+                                                 certificate. The algorithm tries all singleton rewards as candidate anchors; one of them
+                                                 brackets the optimal retained share within a factor n2 . Geometric search and monotonicity
+                                                 of the induced response reward then yield the approximation without enumerating best-
+                                                 response breakpoints.
+
+
+                                         1       Introduction
+                                         Contract design governs how one party incentivizes another to act on its behalf. A central
+                                         difficulty is hidden action: the principal observes the outcome of a delegated task, but not the
+                                         costly actions taken by the agent to produce it. The principal must therefore base payment on
+                                         the observable outcome while anticipating how the payment changes the agent’s behavior. This
+                                         classical economic problem has recently become a subject of growing interest in theoretical
+                                         computer science and algorithmic game theory [7].
+                                              Many delegated tasks involve several actions that may be taken together, rather than a single
+                                         choice between effort and no effort. The combinatorial-action model introduced by Dütting,
+                                         Ezra, Feldman, and Kesselheim [3] captures this setting. A project has n available actions,
+                                             ∗
+                                               csdeng@cityu.edu.hk
+                                             †
+                                               lhydave@pku.edu.cn
+                                             ‡
+                                               liuch.russell@gmail.com
+
+
+                                                                                              1
+indexed by [n] = {1, . . . , n}, and the agent may take any subset S ⊆ [n]. The set function
+f (S) is the principal’s expected gross reward when S is taken, while c(S) is the agent’s cost.
+In the standard binary-outcome interpretation, the project either succeeds or fails and, after
+normalizing the reward from success to one, f (S) is its success probability. The set functions
+allow actions to be substitutes or complements. They also create a computational challenge:
+there are 2n possible action sets.
+    Because the principal cannot observe S, payment cannot depend directly on the chosen
+actions. A linear contract is specified by a share α ∈ [0, 1]: the agent receives an α fraction of
+the generated reward. Facing this contract, the agent chooses a best response
+
+                                 Sα ∈ arg max {αf (S) − c(S)}.
+                                          S⊆[n]
+
+Thus the response Sα is simply the action set that maximizes the agent’s expected payment
+minus cost. Ties are resolved in the principal’s favor, as formalized in Section 3. Anticipating
+the response, the principal receives
+
+                                     P (α) = (1 − α)f (Sα )
+
+and seeks a contract maximizing this quantity. We denote the optimal principal utility by
+OPT = P ∗ = maxα∈[0,1] P (α).
+   An explicit description of a general set function may itself contain exponentially many
+numbers. We therefore work with oracle access. A value query evaluates f (S) or c(S), while
+a best-response query returnsP Sα for a specified contract. For additive rewards, let vi be the
+reward of action i, so f (S) = i∈S vi . Best responses can then be implemented by a standard
+supply query to the cost function [6]: given an item-price vector p, it returns a set maximizing
+                                          X
+                                             pi − c(S).
+                                          i∈S
+
+Setting pi = αvi yields Sα . Supply access thus lets the algorithm observe the economically
+relevant response without requiring an explicit representation of the cost function.
+    As α varies, the agent’s response changes only at breakpoints. General procedures can
+enumerate them with oracle access in time polynomial in their number [2, 5]. That number
+can nevertheless be exponential [3], and the relevant breakpoints can be arbitrarily close [6].
+Exact optimization asks for the best breakpoint. Approximation poses a different question: can
+the principal obtain nearly optimal utility without identifying the exact response change that
+attains the optimum? We call an FPTAS representation independent if, for every ε ∈ (0, 1), it
+makes a number of oracle calls polynomial in n and 1/ε, independent of numerical bit lengths,
+scales, and breakpoint separation. This is an exact-real query model: oracle inputs and answers
+are exact real numbers, and complexity counts oracle calls rather than bit operations.
+    Dütting, Feldman, Gal-Tzur, and Rubinstein [6] studied the query and communication
+complexity of this problem across several combinations of submodular and supermodular rewards
+and costs. Most relevant here, they consider additive rewards and monotone supermodular costs.
+Additivity means that every action has an independent reward vi , whereas supermodularity
+means that marginal costs increase as more actions are taken. They prove that any algorithm
+computing the exact optimal contract in this setting requires 2Ω(n) supply queries.
+    Their tightness discussion leaves a sharp approximation question. A weakly polynomial
+FPTAS, whose complexity depends on the numerical bit lengths, was known [3]. Removing
+
+                                                  2
+this dependence, the representation-independent FPTAS for additive costs in [4] extends to
+monotone subadditive costs [6, Appendix B]. The latter work explicitly left open whether
+instances with supermodular costs, even with additive rewards, admit any representation-
+independent approximation, even under best-response access.
+    The known approximation method [4, 6] has an appealingly simple form: compute welfare,
+guess one action from the optimal response, and search a geometric grid of contracts. Its scale
+certificate, however, is a singleton cost, and the argument relating that cost to the cost of the
+entire response relies on additive or subadditive costs. Supermodular costs reverse the relevant
+inequality, while arbitrary costs provide no such comparison. This is the precise obstruction
+behind the open problem.
+    We show that the exponential barrier is specific to exact optimization. For the class in
+the lower bound of [6], exact optimization requires 2Ω(n) supply queries, whereas a (1 − ε)-
+approximation requires only O(n log(n + 1)/ε) such queries. In fact, the approximation does
+not need supermodularity, monotonicity, or any other structure on the cost function.
+                                                          P
+Theorem 1 (Supply-oracle resolution). Let f (S) = i∈S vi be additive with vi ≥ 0, and let
+c(∅) = 0 and c(S) ≥ 0 for every S ⊆ [n]. For every ε ∈ (0, 1), a deterministic algorithm returns
+a contract with principal utility at least (1 − ε) OPT using
+                                                         
+                                             n log(n + 1)
+                                         O
+                                                   ε
+
+standard supply queries to c, O(n) reward-value queries, and one cost-value query. The bound
+is independent of numerical values and breakpoint separation.
+    This theorem directly resolves the open problem in [6]. Its proof reveals that the relevant
+structure lies on the reward side. A set function is normalized if it is zero on the empty set.
+Recall that f is subadditive if f (S ∪ T ) ≤ f (S) + f (T ) for every S, T ⊆ [n]. The supply-oracle
+result is a special case of the following statement.
+Theorem 2 (General reward theorem). Let f : 2[n] → R≥0 be normalized, monotone, and
+subadditive, and let c(∅) = 0 and c(S) ≥ 0 for every S ⊆ [n]. For every ε ∈ (0, 1), there is a
+deterministic algorithm that returns a contract whose principal utility is at least (1 − ε) OPT.
+It uses                                               
+                                          n log(n + 1)
+                                      O
+                                                ε
+exact best-response and value queries. More precisely, these are reward-value queries; one
+additional cost-value query is used to evaluate welfare. The bound is independent of numerical
+values and breakpoint separations.
+    Additivity is needed only to implement a best-response query as a standard supply query
+to the cost function. Combining Theorem 1 with the exact lower bound gives the following
+separation.
+Corollary 3 (Exact–approximate separation). In the exact-real supply-oracle model, combina-
+torial contracts with additive rewards and monotone supermodular costs exhibit an exponential
+separation between exact and approximate query complexity: exact optimization requires 2Ω(n)
+supply queries in the worst case, whereas a (1 − ε)-approximation uses O(n log(n + 1)/ε) supply
+queries.
+
+                                                3
+    Our proof retains the simple welfare–guess–search template, but changes what fixes the
+scale. Instead of using a singleton cost, we anchor the search by a singleton reward. This makes
+the argument independent of the cost structure.
+    In the nontrivial case OPT > 0, let α∗ be an optimal contract, let S ∗ be its induced response,
+and let δ ∗ = 1 − α∗ be the principal’s optimal retained share. Our analysis combines two
+structural observations. First, a welfare–profit comparison relates the maximum welfare, or
+total surplus, to the principal’s optimal utility:
+
+                      OPT ≤ W ≤ n OPT,              W = max {f (S) − c(S)}.
+                                                           S⊆[n]
+
+Second, if j ∗ is a largest-singleton-reward action in S ∗ , monotonicity and subadditivity give
+
+                                  f ({j ∗ }) ≤ f (S ∗ ) ≤ nf ({j ∗ }).
+
+Since OPT = δ ∗ f (S ∗ ), the two observations yield
+                                                                   
+                                   W           ∗            W
+                                            ≤ δ ≤ min 1,              .                        (1)
+                              n2 f ({j ∗ })              f ({j ∗ })
+
+    The algorithm tries each of the n singleton rewards as the unknown f ({j ∗ }). One guess
+therefore produces a multiplicative interval of width at most n2 containing δ ∗ . A geometric grid
+covers that interval with O(log(n + 1)/ε) contracts. Monotonicity of the reward induced by the
+agent’s response then shows that one grid point gives a (1 − ε)-approximation. In contrast to
+exact optimization, the algorithm never enumerates response breakpoints, searches over the
+numerical range of costs or rewards, or separates cases according to the cost class. The lower
+bound hides the identity of the best breakpoint; the approximation needs only its multiplicative
+scale.
+    As follow-up to this open-problem resolution, we clarify why approximation escapes the
+exact lower bound and where this advantage ends. On the equal-revenue family, ordinary
+approximation needs only the multiplicative scale of the optimal breakpoint, whereas relative
+error γn = Θ(2−n ) forces identification of its hidden identity and restores exponential query
+complexity. Separately, we show robustness to additive best-response error τ , with guarantee
+(1 − ε) OPT −3τ /ε, and establish tightness of the scale certificate.
+    This paper is organized as follows. Section 2 reviews related work, Section 3 fixes the oracle
+model, and Section 4 develops the reward-anchored scale certificate and the resulting FPTAS.
+Section 5 presents the follow-up results on robustness, high-accuracy query complexity, and
+tightness; their proofs appear in the appendices. Section 6 concludes with a discussion of the
+remaining boundary.
+
+
+2    Related work
+The original work on the combinatorial-action model [3] gave an exact algorithm for gross-
+substitutes rewards, proved NP-hardness for submodular rewards, and gave a weakly polynomial
+FPTAS for general monotone rewards and costs with best-response access. Ezra, Feldman, and
+Schlesinger [8] strengthened the computational hardness: with submodular rewards and additive
+costs, no polynomial-time value-query algorithm obtains a constant-factor approximation unless
+P = NP. Complementing these hardness results, breakpoint-enumeration algorithms run in
+
+                                                   4
+time polynomial in the number of breakpoints and give exact tractability for supermodular
+rewards and submodular costs [2, 5].
+    Dütting, Ezra, Feldman, and Kesselheim [4] subsequently gave a representation-independent
+FPTAS for general monotone rewards and additive costs; its welfare–profit comparison, welfare
+query, item guess, and geometric search motivate part of our analysis. Dütting, Feldman,
+Gal-Tzur, and Rubinstein [6] observed that this approach extends to monotone subadditive
+costs and established the exact supply-query lower bound for supermodular costs. Our result
+retains the representation-independent query bound while removing every structural assumption
+on the cost function.
+    Recent work studies exact optimization for special reward and cost classes [10], demand-type
+representations [1], and inapproximability for budgeted variants [9]. None of these results gives
+the subadditive-reward, arbitrary-cost oracle guarantee proved here.
+
+
+3    Model, objective, and oracle access
+There are n hidden actions, and the agent may take any set S ⊆ [n]. Taking S creates expected
+gross reward f (S) for the principal and cost c(S) for the agent. The principal cannot pay for
+the unobserved actions directly; it can only specify how the observable reward will be divided.
+
+Contract, response, and objective. The principal first chooses a linear contract α ∈ [0, 1],
+promising the agent an α share of the generated reward. The agent’s utility from S is therefore
+αf (S) − c(S), so the contract induces the best response
+                                Sα ∈ arg max {αf (S) − c(S)}.
+                                          S⊆[n]
+
+Ties are broken toward larger f (S), as preferred by the principal. The principal keeps the
+remaining share 1 − α; its utility and optimum are
+                     P (α) = (1 − α)f (Sα ),          P ∗ = OPT = max P (α).
+                                                                 α∈[0,1]
+
+Given an accuracy parameter ε ∈ (0, 1), our algorithm must return a contract α            α) ≥
+                                                                                b with P (b
+(1 − ε)P ∗ . The output is the contract parameter; the agent subsequently selects Sαb .
+     For our main result, the reward f : 2[n] → R≥0 is normalized, monotone, and subadditive:
+f (∅) = 0, adding actions cannot decrease reward, and f (S ∪ T ) ≤ f (S) + f (T ). The cost
+c : 2[n] → R≥0 is arbitrary except that c(∅) = 0. The maximum total surplus is
+                                   W = max {f (S) − c(S)}
+                                         S⊆[n]
+
+and serves only as a scale benchmark; the principal’s objective remains P (α). Since the agent
+maximizes f (S) − c(S) at α = 1, one best-response query computes W .
+   Because f and c may have exponential-size descriptions, the algorithm uses exact queries:
+a best-response query at α returns Sα , while value queries return f (S) or c(S). Complexity
+counts oracle calls, not numerical bit lengths.
+                                         P
+   For additive rewards, write f (S) = i∈S vi , where vi = f ({i}). A best-response query at
+α > 0 is the standard supply query to c at prices pi = αvi :
+                                              (              )
+                                                X
+                                S ∈ arg max       pi − c(T ) ,
+                                          T
+                                                  i∈T
+
+
+                                                  5
+The standard larger-cost tie-breaking agrees with principal-favoring tie-breaking because tied
+sets satisfy c(S) − c(T ) = α(f (S) − f (T )).
+
+
+4     Reward-anchored geometric search
+The algorithm searches for the scale of the principal’s optimal retained share. A contract whose
+retained share lies just below the optimal one is approximately optimal because the reward of a
+best response grows with the agent’s share. The main difficulty is to locate this scale without
+numerical or structural assumptions on costs. We first formalize the approximation target, then
+derive a cost-independent welfare benchmark and a reward-side scale certificate, and finally
+turn the certificate into a geometric search.
+
+4.1   From approximation to scale localization
+It is useful to parameterize a contract by
+
+                                             δ = 1 − α,
+
+the fraction of generated reward retained by the principal. Fix an optimal contract–response
+pair (α∗ , S ∗ ) and write δ ∗ = 1 − α∗ , so that P ∗ = δ ∗ f (S ∗ ).
+    The starting point of the known search framework is response-reward monotonicity.
+
+Lemma 4 (Response-reward monotonicity [3, 4, 6]). If 0 ≤ α ≤ α′ ≤ 1, then f (Sα ) ≤ f (Sα′ ).
+
+    The response sets themselves need not be nested. The intuition is that a larger agent share
+places greater weight on generated reward, so the reward of a utility-maximizing response cannot
+decrease. Formally, the statement follows immediately by comparing the two best-response
+inequalities; we use it as a standard fact from the earlier framework.
+    This monotonicity identifies exactly what the search must find. If a query uses a retained
+share satisfying
+                                       (1 − ε)δ ∗ ≤ δ ≤ δ ∗ ,                                (2)
+then its agent share α = 1 − δ is at least α∗ . Hence f (Sα ) ≥ f (S ∗ ), and its principal utility
+satisfies
+                       P (α) = δf (Sα ) ≥ (1 − ε)δ ∗ f (S ∗ ) = (1 − ε)P ∗ .
+Thus approximation reduces to locating the multiplicative scale of the unknown δ ∗ ; the identity
+of the exact optimal breakpoint is not needed.
+    A uniform additive grid is insufficient because δ ∗ has no inverse-polynomial lower bound. A
+geometric grid avoids dependence on numerical magnitudes, provided it starts from a polynomial-
+width multiplicative interval containing δ ∗ . Indeed, if b/R ≤ δ ∗ ≤ b for R = poly(n), then the
+points b(1 − ε)k contain one satisfying (2) after O(log R/ε) steps. This is the geometric-search
+step used in prior work [4, 6]; here we invoke it rather than reprove it as a separate abstract
+lemma.
+    Earlier algorithms obtain the starting interval by guessing the cost of an action in S ∗ .
+Additive or subadditive costs then relate that singleton cost to c(S ∗ ) [4, 6]. With arbitrary set
+costs, singleton costs provide no information about the cost of the whole response. Our task is
+therefore to construct an enumerable anchor for δ ∗ using rewards instead.
+
+
+                                                 6
+4.2    The reward-anchored scale certificate
+Recall that
+                                      W = max {f (S) − c(S)}.
+                                            S⊆[n]
+
+Equivalently, W is the agent’s maximum utility at α = 1. The lower comparison P ∗ ≤ W is
+immediate: the agent can always choose the empty set, so an induced response has nonnegative
+agent utility, and its welfare is at least the principal’s utility. The substantive direction is the
+following upper bound. Its proof views the agent’s maximum utility as an upper envelope of
+lines. As the offered share increases, we charge welfare growth when a new action first appears
+on that envelope. At most n actions can appear for the first time, and each charge is bounded
+by the principal’s optimal utility.
+
+Lemma 5. For normalized monotone subadditive rewards and arbitrary normalized nonnegative
+costs,
+                                  P ∗ ≤ W ≤ nP ∗ .
+
+Proof. Let (α∗ , S ∗ ) be optimal. Since the empty set is available, c(S ∗ ) ≤ α∗ f (S ∗ ), and hence
+
+                            P ∗ = (1 − α∗ )f (S ∗ ) ≤ f (S ∗ ) − c(S ∗ ) ≤ W.
+
+If W = 0, the claim is immediate. Assume henceforth that W > 0. Let g(α) denote the
+agent’s maximum utility under contract α. As a function of the offered share, it is the convex,
+piecewise-linear upper envelope
+
+                                    g(α) = max{αf (S) − c(S)}.
+                                              S
+
+Because ∅ is available and costs are nonnegative, g(0) = 0; also g(1) = W . Let
+
+                                0 = a0 < a1 < · · · < ak < ak+1 = 1
+
+be the endpoints of its positive-length linear pieces, and let St be an active response on [at , at+1 ).
+Choose the representatives at endpoints consistently with principal-favoring tie-breaking. The
+slopes f (St ) are nondecreasing, and integration gives
+                                                     k
+                                                     X
+                             W = g(1) − g(0) =             (at+1 − at )f (St ).                     (3)
+                                                     t=0
+
+   We now expose actions only when they first occur on the response curve. Let ℓ1 be the first
+index with Sℓ1 ̸= ∅. Having chosen ℓr , let the cumulative set of actions seen so far be
+                                                     ℓr
+                                                     [
+                                              Tr =         St
+                                                     t=0
+
+and let ℓr+1 be the first index larger than ℓr for which Sℓr+1 ⊈ Tr . If this process produces d
+epochs, set ℓd+1 = k + 1 and T0 = ∅. Every epoch introduces a new action, so d ≤ n. Moreover,
+for ℓr ≤ t < ℓr+1 we have St ⊆ Tr .
+
+
+
+                                                     7
+   Let Br = Tr \ Tr−1 be the block of newly appearing actions. Monotonicity and subadditivity
+imply
+                                           r
+                                           X
+                       f (St ) ≤ f (Tr ) ≤   f (Bj )  (ℓr ≤ t < ℓr+1 ).
+                                               j=1
+
+                                                                              ˙ · · ∪B
+Thus [aℓr , aℓr+1 ) is an epoch during which every response uses only Tr = B1 ∪·    ˙ r . Responses
+before the first epoch are empty. Partitioning (3) into these epochs, applying the preceding
+inequalities, and exchanging sums gives
+                                         d
+                                         X                      r
+                                                                X
+                                 W ≤           (aℓr+1 − aℓr )         f (Bj )
+                                         r=1                    j=1
+                                         d
+                                         X
+                                     =         (1 − aℓj )f (Bj ).
+                                         j=1
+
+No intermediate response introduces a new action. Hence every action in Bj first appears in
+Sℓj , so Bj ⊆ Sℓj . Monotonicity therefore yields
+
+                             (1 − aℓj )f (Bj ) ≤ (1 − aℓj )f (Sℓj ) ≤ P ∗ .
+
+Summing over d ≤ n blocks proves the claim.
+
+   The upper-bound proof adapts the response-curve argument of [4]. The extension important
+here is that it uses no additivity or other structure of the cost function.
+   The welfare benchmark controls P ∗ without revealing the unknown response S ∗ . To recover
+the missing reward scale, choose an action of S ∗ with largest singleton reward. Subadditivity
+makes this singleton an n-approximation to f (S ∗ ), while all n possible singleton rewards can
+be queried in advance. Combining these observations gives the certificate that replaces the cost
+anchor used in previous work.
+
+Lemma 6 (Reward-anchored scale). Suppose P ∗ > 0. Let (α∗ , S ∗ ) be optimal and let δ ∗ = 1−α∗
+be the principal’s optimal retained share. Choose an action j ∗ ∈ S ∗ with largest singleton reward:
+
+                                         j ∗ ∈ arg max∗ f ({j}).
+                                                     j∈S
+
+Then                                                               
+                                   W           ∗            W
+                                            ≤ δ ≤ min 1,              .                         (4)
+                              n2 f ({j ∗ })              f ({j ∗ })
+The ratio between the upper and lower endpoints is at most n2 .
+
+Proof. Since P ∗ > 0, the set S ∗ contains an item of positive singleton reward: otherwise
+subadditivity would give f (S ∗ ) = 0. Monotonicity, subadditivity, and the definition of j ∗ give
+                                                 X
+                         f ({j ∗ }) ≤ f (S ∗ ) ≤   f ({j}) ≤ nf ({j ∗ }).                      (5)
+                                                     j∈S ∗
+
+By definition,
+                                            P ∗ = δ ∗ f (S ∗ ).                                 (6)
+
+                                                      8
+The right inequality in (4) follows from Lemma 5, (5), and (6): δ ∗ f ({j ∗ }) ≤ P ∗ ≤ W , while
+δ ∗ ≤ 1.
+    For the left inequality, Lemma 5 and (5) imply
+
+                             W ≤ nP ∗ = nδ ∗ f (S ∗ ) ≤ n2 δ ∗ f ({j ∗ }).
+
+Finally, if W/f ({j ∗ }) ≤ 1, the endpoint ratio is exactly n2 ; otherwise it is n2 f ({j ∗ })/W <
+n2 .
+
+4.3   The resulting FPTAS
+The oracle model supplies exactly the observable quantities in the certificate. A best-response
+query at α = 1 returns a welfare-maximizing action set T ∈ arg maxS {f (S) − c(S)}, from which
+reward and cost values give W = f (T ) − c(T ). Singleton reward queries enumerate all possible
+anchors.
+     The algorithm now directly implements the preceding scale bracket. One query at α = 1
+computes welfare, n singleton queries list all possible reward anchors, and one geometric grid is
+searched for each positive anchor. No response breakpoint is computed or approximated.
+     We parameterize a contract by the principal’s retained share δ = 1 − α. Let q = 1 − ε be
+the geometric contraction ratio, and let K be the number of grid steps needed to span a factor
+n2 , namely the least nonnegative integer such that
+                                                      1
+                                             qK ≤        .                                     (7)
+                                                      n2
+The shift by one grid position in Algorithm 1 ensures that every queried contract has α > 0.
+This is immaterial for the general best-response oracle and ensures correct implementation by
+the standard supply oracle in the additive-reward special case.
+
+Algorithm 1 Reward-anchored geometric search
+Require: Actions [n]; value oracles for a normalized monotone subadditive reward f and a
+    normalized nonnegative cost c.
+Require: An exact best-response oracle returning Sα at each queried contract α ∈ [0, 1];
+    accuracy ε ∈ (0, 1).
+Ensure: A contract α      b ∈ [0, 1].
+ 1: Query each action’s singleton reward ai = f ({i}), i ∈ [n].
+ 2: Query the best-response oracle at α = 1, denote its response by T , and compute W =
+    f (T ) − c(T ).
+ 3: if W = 0 then
+ 4:     return α = 1.
+ 5: Let q = 1 − ε and choose the least K ≥ 0 satisfying (7).
+ 6: for every i with ai > 0 do
+ 7:     Set the candidate bracket’s upper endpoint bi ← min{1, W/ai }.
+ 8:     for k = 1, . . . , K + 1 do
+ 9:         Set the retained share δi,k ← bi q k and contract share αi,k ← 1 − δi,k .
+10:         Query Sαi,k and its value f (Sαi,k ).
+11:         Record δi,k f (Sαi,k ).
+12: return a queried contract with maximum recorded principal utility.
+
+
+
+                                                  9
+Proof of Theorems 1 and 2. If W = 0, every best response satisfies
+
+                                  P (α) ≤ f (Sα ) − c(Sα ) ≤ W = 0,
+
+where the first inequality follows from c(Sα ) ≤ αf (Sα ) because ∅ is available. Thus the returned
+contract is optimal.
+   Assume W > 0 and consider the iteration i = j ∗ supplied by Lemma 6. Let b = bj ∗ be the
+correct bracket’s upper endpoint. The bracket gives b ≥ δ ∗ and
+                                         b       W
+                                            ≤ 2           ≤ δ∗.                                       (8)
+                                        n 2  n f ({j ∗ })
+
+By (7), the last grid point satisfies bq K+1 ≤ qδ ∗ < δ ∗ .
+     If b = δ ∗ , the first queried point is qδ ∗ . Otherwise, let k be the first queried grid index with
+bq k ≤ δ ∗ . The preceding point is larger than δ ∗ , so
+
+                                           qδ ∗ < bq k ≤ δ ∗ .                                        (9)
+
+In either case the algorithm queries some δ satisfying qδ ∗ ≤ δ ≤ δ ∗ . For its contract α = 1 − δ,
+we have α ≥ α∗ . Lemma 4 therefore implies f (Sα ) ≥ f (S ∗ ), and hence
+
+                             P (α) = δf (Sα ) ≥ qδ ∗ f (S ∗ ) = (1 − ε)P ∗ .
+
+The algorithm returns the best queried contract.
+   It remains to count queries. Since − log(1 − ε) ≥ ε,
+                                                
+                                         2 log n
+                                  K≤               (n ≥ 2).
+                                            ε
+Thus there are O(n log(n + 1)/ε) best-response and value queries. If f is additive, all queried
+response values are computed from the n singleton values. Every queried δ is strictly smaller
+than one, so the corresponding α > 0 best response is implemented by the supply query with
+prices pj = αf ({j}) and the correct tie-breaking. Only one additional cost-value query, used to
+compute W , is required.
+
+
+5     Beyond the FPTAS: robustness and limits
+The efficiency of the FPTAS rests on two features of the model. It uses exact best responses,
+and it searches only for the multiplicative scale of the optimal retained share rather than the
+identity of its breakpoint. The first feature is robust: additive response error produces only an
+additive loss in principal utility. The second has genuine limits: exponentially fine accuracy
+requires recovering the hidden breakpoint identity, and the n2 localization width cannot be
+improved in general.
+
+5.1    Robustness to approximate best responses
+The reward-anchored search continues to work when the agent’s response is computed only
+approximately. A τ -best-response oracle, queried at α, may return any set Seα satisfying
+
+                            αf (Seα ) − c(Seα ) ≥ max{αf (S) − c(S)} − τ.
+                                                  S
+
+
+                                                   10
+The guarantee below is for the response selection implemented by the oracle; no consistency
+across queries is required. We compare the realized principal utility (1 − α)f (Seα ) with the
+exact-response benchmark P ∗ defined in Section 3.
+
+Theorem 7 (Approximate-oracle robustness). Under the assumptions of Theorem 2, suppose
+best-response queries are replaced by τ -best-response queries and exact reward and cost values
+remain available. For every ε ∈ (0, 1), a deterministic algorithm makes
+                                                        
+                                            n log(n + 1)
+                                       O
+                                                  ε
+
+τ -best-response and reward-value queries, plus one cost-value query, and returns a queried
+contract and response with principal utility at least
+                                                      3τ
+                                       (1 − ε)P ∗ −      .
+                                                       ε
+    To see the proof idea, query the approximate oracle at α = 1. Its realized welfare gives an
+additive-τ estimate of W , which widens the scale bracket by only a constant factor. The grid
+then deliberately moves one step below the target retained share. The resulting separation
+from α∗ creates enough agent-utility margin to absorb the response error, at a principal-utility
+cost of order τ /ε. Appendix A gives the full argument and constants.
+
+5.2   Limits of scale localization
+The equal-revenue family used for the exact lower bound of [6] has exponentially many critical
+contracts with the same principal utility. Its hidden perturbation changes the identity of the
+unique optimum while barely changing its scale. Ordinary approximation can ignore this
+identity, but accuracy comparable to the perturbation cannot.
+
+Theorem 8 (Approximation requires accuracy dependence). There is a sequence γn = Θ(2−n )
+such that any randomized algorithm which, with constant success probability, computes a (1−γn )-
+approximate contract for every instance with additive reward and monotone supermodular cost
+requires 2Ω(n) supply queries in expectation. The conclusion continues to hold with polynomially
+many cost-value queries.
+
+    This establishes a high-accuracy boundary, not a lower bound for constant or inverse-
+polynomial accuracy. The construction and proof appear in Appendix B.
+    A separate boundary concerns the width of the certificate itself. Its n2 factor combines
+W ≤ nP ∗ with f (S ∗ ) ≤ n maxi∈S ∗ f ({i}). The following proposition shows that the two losses
+can occur simultaneously, while the first remains tight even in the monotone-supermodular cost
+class.
+
+Proposition 9 (Tightness of reward-anchored localization). (i) For every m ≥ 2 and fixed
+    η ∈ (0, 1), there is an instance with n = 2m actions, additive rewards, and arbitrary
+    normalized nonnegative costs having a unique optimal principal contract (α∗ , S ∗ ) such
+    that
+                                 W                m(1 + η + m/2)
+                             ∗
+                                                =                = Ω(n2 ).
+                      (1 − α ) maxi∈S ∗ f ({i})        1+η
+
+
+                                              11
+ (ii) For every n ≥ 2 and r > 1, there is an instance with normalized additive rewards and
+      monotone supermodular costs satisfying
+                                          W      n−1
+                                             =n−     .
+                                          P∗      r
+    The constructions are given in Appendix C. They establish tightness of the localization
+certificate, not a matching query lower bound, because the bracket width enters the algorithm
+only logarithmically.
+
+
+6    Conclusion and discussion
+We resolve the representation-independent approximation question for additive rewards and
+arbitrary set costs, and more generally for monotone subadditive rewards under best-response
+access. The resulting separation between exact and approximate query complexity is explained by
+reward-side localization: approximation needs the multiplicative scale of an optimal breakpoint,
+while exact optimization may require its hidden identity. The robustness and tightness results
+show both the reach and the limits of this explanation.
+   The main remaining question is whether representation-independent approximation with
+arbitrary costs extends to monotone rewards beyond subadditivity. Our proof uses subadditivity
+twice: to obtain the polynomial welfare–profit comparison W ≤ nP ∗ and to approximate the
+reward of an optimal response by one of its singleton rewards. Progress beyond this boundary
+therefore requires a different polynomial welfare gap, a different enumerable anchor, or an
+impossibility result showing that no such localization is possible.
+
+
+Acknowledgments
+OpenAI Codex assisted with proof development and verification. The authors independently
+checked all arguments and assume full responsibility for the content of this manuscript.
+
+
+References
+ [1] E. Baldwin, P. Dütting, M. Feldman, and M. Schlesinger. Combinatorial contracts through
+     demand types. arXiv preprint arXiv:2604.15125, 2026.
+
+ [2] R. Deo-Campo Vuong, S. Dughmi, N. Patel, and A. Prasad. On supermodular contracts
+     and dense subgraphs. In Proceedings of the 2024 ACM–SIAM Symposium on Discrete
+     Algorithms (SODA), pages 109–132, 2024.
+
+ [3] P. Dütting, T. Ezra, M. Feldman, and T. Kesselheim. Combinatorial contracts. In
+     Proceedings of the 62nd IEEE Symposium on Foundations of Computer Science (FOCS),
+     pages 815–826, 2021.
+
+ [4] P. Dütting, T. Ezra, M. Feldman, and T. Kesselheim. Multi-agent combinatorial contracts.
+     In Proceedings of the 2025 ACM–SIAM Symposium on Discrete Algorithms (SODA), pages
+     1857–1891, 2025.
+
+
+
+                                              12
+ [5] P. Dütting, M. Feldman, and Y. Gal-Tzur. Combinatorial contracts beyond gross substi-
+     tutes. In Proceedings of the 2024 ACM–SIAM Symposium on Discrete Algorithms (SODA),
+     pages 92–108, 2024.
+
+ [6] P. Dütting, M. Feldman, Y. Gal-Tzur, and A. Rubinstein. When contracts get com-
+     plex: Information-theoretic barriers. In Proceedings of the 2026 ACM–SIAM Symposium
+     on Discrete Algorithms (SODA), pages 6464–6493, 2026. Full version: arXiv preprint
+     arXiv:2403.09794.
+
+ [7] P. Dütting, M. Feldman, and I. Talgam-Cohen. Algorithmic contract theory: A survey.
+     Foundations and Trends in Theoretical Computer Science, 16(3–4):211–411, 2024.
+
+ [8] T. Ezra, M. Feldman, and M. Schlesinger. On the (in)approximability of combinatorial con-
+     tracts. In Proceedings of the 15th Innovations in Theoretical Computer Science Conference
+     (ITCS), pages 44:1–44:22, 2024.
+
+ [9] M. Feldman, Y. Gal-Tzur, T. Ponitka, and M. Schlesinger. One action too many: Inap-
+     proximability of budgeted combinatorial contracts. In Proceedings of the 17th Innovations
+     in Theoretical Computer Science Conference (ITCS), pages 58:1–58:24, 2026.
+
+[10] M. Feldman and L. Yashin. Ultra efficient contracts: Pushing the boundaries of tractable
+     contract design. arXiv preprint arXiv:2506.18008, 2025; revised 2026.
+
+
+
+
+                                             13
+A      Proof of approximate-response robustness
+Proof of Theorem 7. Query the approximate oracle at α = 1, let T be its response, and let L =
+max{0, f (T ) − c(T )} be the resulting lower estimate of optimal welfare. Since W is optimal welfare,
+
+                                         W − τ ≤ f (T ) − c(T ) ≤ W.
+
+If L ≤ τ , then W ≤ L + τ ≤ 2τ . Returning α = 1 gives zero principal utility, which already satisfies the
+claimed bound because P ∗ ≤ W .
+    Assume L > τ and let U = L + τ be the corresponding welfare upper bound. Then
+
+                                                 L ≤ W ≤ U < 2L.
+
+Let (α∗ , S ∗ ) be an exact optimal contract–response pair, let δ ∗ = 1 − α∗ be its retained share, and let
+a = f ({j ∗ }) be the largest singleton reward in S ∗ . As in Lemma 6,
+                                                                 
+                                          W        ∗            W
+                                               ≤ δ   ≤ min   1,     .
+                                          n2 a                  a
+
+Let b = min{1, U/a} be the widened bracket’s upper endpoint. The preceding inequalities imply
+
+                                                    b
+                                                       ≤ δ ∗ ≤ b.                                           (10)
+                                                   2n2
+Indeed, the upper bound follows from W ≤ U . For the lower bound, U < 2W ; this proves the claim
+directly when b = U/a, and when b = 1 it gives W > a/2.
+    Allocate ρ = ε/3 of the error budget to oracle error and let q = 1 − ρ be the grid ratio. For every
+positive singleton reward ai , search the grid bi , bi q, bi q 2 , . . ., where bi = min{1, U/ai }, far enough to
+cover multiplicative width 2n2 , and query one further point. For the correct anchor, let k ≥ 0 be the
+least index such that bq k ≤ δ ∗ . If k = 0, then b = δ ∗ ; otherwise minimality gives qδ ∗ < bq k ≤ δ ∗ . Hence
+the additional point δ = bq k+1 satisfies
+                                                q 2 δ ∗ < δ ≤ qδ ∗ .                                         (11)
+This deliberate undershoot preserves at least a q 2 fraction of the principal’s retained share while creating
+the margin α − α∗ ≥ ρδ ∗ needed to absorb response error. Let α = 1 − δ and let Seα be any response
+returned by the approximate oracle. Approximate optimality at α and exact optimality of S ∗ at α∗ give
+
+                                   αf (Seα ) − c(Seα ) ≥ αf (S ∗ ) − c(S ∗ ) − τ,
+                                  α∗ f (S ∗ ) − c(S ∗ ) ≥ α∗ f (Seα ) − c(Seα ).
+
+Adding and using α − α∗ = δ ∗ − δ ≥ ρδ ∗ yields
+                                                                     τ
+                                            f (Seα ) ≥ f (S ∗ ) −        .
+                                                                    ρδ ∗
+
+Consequently, since δ > q 2 δ ∗ and δ ≤ qδ ∗ ,
+                                                          qτ                3τ
+                                  δf (Seα ) ≥ q 2 P ∗ −      ≥ (1 − ε)P ∗ −    .
+                                                           ρ                 ε
+
+The last inequality uses q 2 = (1 − ε/3)2 ≥ 1 − ε. Returning the queried pair with greatest realized
+principal utility can only improve this bound.
+    Finally, covering a multiplicative interval of width 2n2 with ratio q = 1 − ε/3 takes O(log(n + 1)/ε)
+queries per singleton anchor. The algorithm therefore uses the stated number of τ -best-response and
+reward-value queries, plus the one cost-value query used to compute L.
+
+
+
+                                                          14
+B     Equal-revenue family and high-accuracy lower bound
+The equal-revenue construction underlying the exact lower bound of [6] makes the separation in Corollary 3
+especially transparent. It also provides an independent stress test for the two structural quantities used
+by our algorithm.
+    Let N = 2n − 1 be the largest binary index. Assign each set S ⊆ [n] its binary value i∈S 2i−1 ,
+                                                                                                P
+and let St denote the unique set with index t ∈ {0, . . . , N }; in particular, S0 = ∅. Give item i reward
+vi = 2i−1 , so that f (St ) = t. The equal-revenue cost is defined by
+                                                                  t−1
+                          c(S0 ) = 0,     c(St ) − c(St−1 ) =              (1 ≤ t ≤ N ).
+                                                                   t
+It is monotone and supermodular. For each St , define its critical contract share by
+                                                          t−1
+                                                   αt =       .
+                                                           t
+This contract induces St for 1 ≤ t ≤ N . As shown below, every such critical contract gives the principal
+the same utility, hence the name equal revenue.
+Proposition 10 (Anatomy of the equal-revenue instance). On the preceding instance,
+
+                                         P ∗ = 1,         W = H2n −1 ,
+               Pm
+where Hm =       h=1 1/h is the mth harmonic number. Moreover, if 1 ≤ t ≤ N and jt denotes a
+largest-reward action in St , i.e., jt ∈ arg maxj∈St vj , then
+                                             1               1
+                                                 < 1 − αt ≤      .                                      (12)
+                                            2vjt            vj t
+
+Thus the welfare–profit gap is Θ(n), while a singleton reward locates the scale of every critical contract
+within a factor two.
+Proof. By construction,
+                                                          1
+                                         (1 − αt )f (St ) =  · t = 1.
+                                                           t
+To identify the response curve, let ut (α) = αt − c(St ) be the agent’s utility from St . The consecutive
+lines ut−1 and ut intersect at
+                                          c(St ) − c(St−1 ) = αt .
+These intersection points strictly increase with t, so the upper envelope visits S0 , S1 , . . . , SN in this
+order. Thus the αt are exactly the critical contracts, and P ∗ = 1. Telescoping the cost recurrence gives
+                                                   t
+                                                   X h−1
+                                        c(St ) =              = t − Ht .
+                                                          h
+                                                   h=1
+
+Hence f (St ) − c(St ) = Ht , which is maximized at t = N .
+    If 2k−1 is the highest power of two appearing in the binary representation of t, then vjt = 2k−1 ≤
+t < 2k = 2vjt . Since 1 − αt = 1/t, taking reciprocals yields (12).
+
+    The lower bound lowers the cost of one hidden set, making one of exponentially many nearly tied
+contracts uniquely optimal. Exact optimization must discover that set. At coarser relative accuracy, its
+small utility advantage can be ignored: Proposition 10 shows that every candidate breakpoint has a
+scale certified by one singleton reward, which our grid can find without learning its identity.
+    The next subsection locates the limit of this explanation. The hidden cost perturbation is Θ(4−n ),
+but because it applies to a set of reward Θ(2n ), it creates a relative principal-utility advantage Θ(2−n ).
+At accuracy comparable to that advantage, approximation must again identify the hidden set.
+
+
+                                                         15
+B.1     The high-accuracy query lower bound
+The exact lower bound alone does not explain whether the dependence on 1/ε in our FPTAS is necessary.
+The same hidden-perturbation family gives a partial answer: once the requested relative error reaches
+the scale of the hidden perturbation, approximation again requires exponentially many queries.
+    We Pwill use one simulation fact from Appendix E of [6]. For a nonnegative price vector p, let
+p(S) = i∈S pi be the total price of S. The σ-approximate supply Dσ (p) is the collection of sets whose
+price-minus-cost objective lies within σ of optimal:
+                                                                             
+                      Dσ (p) = S ⊆ [n] : p(S) − c(S) ≥ max {p(T ) − c(T )} − σ .
+                                                              T ⊆[n]
+
+For the equal-revenue cost above, if
+                                                  1
+                                       0<σ<          min (αt+1 − αt ),
+                                                  2 1≤t<N
+
+then Dσ (p) has size O(n2 ) for every p and can be enumerated from the known base cost without further
+oracle calls, though the enumeration need not be computationally efficient. Consequently, if a perturbed
+cost differs from c on one set by at most σ, every exact supply response to the perturbed cost lies in
+Dσ (p); querying the perturbed cost on these candidates simulates the supply query with O(n2 ) value
+queries. This is the sparse-supply property used below.
+
+Proof of Theorem 8. Fix n ≥ 2, let N = 2n − 1, and use the equal-revenue instance from Section B.
+Thus f (St ) = t, αt = (t − 1)/t, and every critical contract gives principal utility one. Let K be the
+candidate set of hidden indices and let ζ be the amount by which the hidden set’s cost is reduced:
+                                                                        1
+                                   K = {⌈N/2⌉, . . . , N },       ζ=        .
+                                                                       8N 2
+For each hidden index k ∈ K, define ck by lowering only the cost of Sk by ζ. Since
+                                           1                      1         1
+                         αt+1 − αt =               and     ζ=       2
+                                                                      <            ,
+                                       t(t + 1)                  8N     2N (N − 1)
+
+the preceding sparse-supply property applies with σ = ζ.
+     These perturbations preserve nonnegativity, monotonicity, and supermodularity. For completeness,
+write c(St ) = t − Ht . Its consecutive increments dt = c(St ) − c(St−1 ) = 1 − 1/t are increasing. Every
+strict supermodular marginal gap has the following form. If the indices of S ⊂ T differ by h ≥ 1 and the
+added action has binary value a, then the gap is
+                          a                     a
+                          X                   X                h            1
+                                dx+h+r − dx+r =                            ≥ 2,
+                          r=1                       r=1
+                                                        (x + r)(x + h + r)  N
+
+where x is the index of S. The four sets in such a marginal comparison are distinct, so changing one set
+value alters this positive gap by at most ζ < 1/N 2 . A monotonicity comparison involving the perturbed
+set has gap at least 1 − 1/k ≥ 1/2 before perturbation and therefore remains valid; all other inequalities
+are unchanged.
+    The line for Sk moves upward by ζ. Its intersection with the preceding response line shifts from αk
+to αk′ = αk − ζ, because consecutive rewards differ by one. Hence its principal utility at entry becomes
+
+                                                                        1
+                                   (1 − αk′ )f (Sk ) = 1 + ζk ≥ 1 +        .
+                                                                       16N
+The small-perturbation inequality above preserves the order of the response lines. The lifted line for
+Sk enters at αk′ . If k < N , it remains active until its intersection with Sk+1 , which shifts to αk+1 + ζ;
+
+
+                                                      16
+if k = N , it remains active through α = 1. Every other response line enters at its original breakpoint,
+except Sk+1 when that line exists, which enters later. Principal utility decreases with α while a fixed
+response is active. Therefore every response other than Sk yields utility at most one, whereas Sk yields
+its strictly larger maximum at αk′ . This makes αk′ the unique optimal contract under the stipulated
+tie-breaking.
+     Set the target relative error to γn = 1/(32N ). Since
+                                                          
+                                                         1
+                                         (1 − γn ) 1 +       > 1,
+                                                       16N
+
+every successful (1 − γn )-approximation must induce Sk and therefore identifies the hidden index.
+    It remains to transfer this identification requirement to supply queries. If the base cost c is known,
+a value query distinguishes ck from c only when it queries the hidden set. With k uniform in K,
+identification therefore needs Ω(N ) value queries by Yao’s principle. By the sparse-supply property
+established above, a supply query to ck can be simulated by enumerating Dζ (p) and making O(n2 ) value
+queries to ck . Indeed, an optimizer under ck is within ζ of optimal under c, because the perturbation
+can improve the objective of only one set and by only ζ. Consequently, an algorithm making Q supply
+queries and polynomially many additional value queries yields O(Qn2 ) + poly(n) value queries. The
+Ω(N ) identification lower bound implies
+
+                                                N
+                                         Q≥           = 2Ω(n) .
+                                              poly(n)
+
+
+
+
+                                                   17
+C     Tightness constructions
+                                                          ˙ 1 , . . . , bm }, where A contains m unit-reward
+Proof of Proposition 9, part (i). Let the ground set be A ∪{b
+actions and action br has reward Rr = 2r m for r ∈ [m]. Rewards are additive. Set
+
+                                                                         P0
+                    R0 = m,         P0 = 1 + η,            α0 = 1 −         ,   c(A) = m − P0 .
+                                                                         m
+For r ≥ 1, recursively define
+                                    1
+                        αr = 1 −       ,        c({br }) = c({br−1 }) + αr (Rr − Rr−1 ),
+                                    Rr
+where {b0 } denotes A and c({b0 }) = c(A). Every other nonempty set S receives cost c(S) = 2f (S).
+These costs are nonnegative. Dividing every reward and cost by f ([n]) leaves all responses and ratios
+unchanged if rewards must lie in [0, 1].
+    The only lines that can appear on the agent’s upper envelope are ∅, A, {b1 }, . . . , {bm }. Their slopes
+are strictly increasing, consecutive lines intersect at
+
+                                           0 < α0 < α1 < · · · < αm < 1.
+
+Thus they appear in this order. The principal receives P0 = 1 + η from A at α0 , but only (1 − αr )Rr = 1
+at every later intersection; utility decreases between intersections. Hence the unique optimum is
+(α∗ , S ∗ ) = (α0 , A).
+     Let W0 = P0 and Wr = Rr − c({br }). The recurrence gives
+                                                                                     1
+                                   Wr − Wr−1 = (1 − αr )(Rr − Rr−1 ) =                 .
+                                                                                     2
+Therefore W = P0 +m/2, while 1−α∗ = P0 /m and maxi∈S ∗ f ({i}) = 1. Substitution proves part (i).
+
+Proof of Proposition 9, part (ii). Let
+                      n−1
+                      X                     ri−1                                     P
+                 Z=         rh ,    vi =         ,       P = v1 ,         ai = 1 −      = 1 − r−(i−1) .
+                                             Z                                       vi
+                      h=0
+
+Define d1 = 0 and, for i ≥ 2,
+                                            di = di−1 + ai (vi − vi−1 ),
+and set                                                                 
+                                                        X               |S|
+                                             c(S) =           di + 2        .
+                                                                         2
+                                                        i∈S
+
+The marginal cost of adding i to S is di +2|S|, so c is monotone and supermodular. Sets of size at least two
+have cost at least 2 but αf (S) ≤ 1, so they are never best responses. Since (di − di−1 )/(vi − vi−1 ) = ai
+and the ai increase, the upper envelope visits the singletons in order. Each gives principal utility
+(1 − ai )vi = P , so P ∗ = P . Finally, telescoping at α = 1 gives
+                                                 n
+                                                 X
+                      W = v n − dn = P +               (1 − ai )(vi − vi−1 )
+                                                 i=2
+                                                                                             
+                                                                                       n−1
+                                      = P (1 + (n − 1)(1 − 1/r)) = P                n−            .
+                                                                                        r
+
+
+
+
+                                                              18
+

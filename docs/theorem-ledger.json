@@ -1,0 +1,442 @@
+{
+  "source": "arXiv:2609.35803v1",
+  "numbered": [
+    {
+      "id": "T1",
+      "title": "Supply-oracle resolution",
+      "label": "supply",
+      "scope": "Theorems 1/2 algorithm, cost tie-break positive alpha",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.Paper.theorem1",
+        "CombinatorialContracts.Paper.theorem1_empty"
+      ]
+    },
+    {
+      "id": "T2",
+      "title": "General reward theorem",
+      "label": "general",
+      "scope": "Exact-real finite oracle algorithm, query count, reward queries and one cost query",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.Paper.theorem2",
+        "CombinatorialContracts.Paper.theorem2_empty"
+      ]
+    },
+    {
+      "id": "C3",
+      "title": "Exact\u2013approximate separation",
+      "label": "separation",
+      "scope": "External exact lower bound and Theorem1",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.LowerBounds.corollary3_exact_worst_instance",
+        "CombinatorialContracts.Paper.theorem1"
+      ]
+    },
+    {
+      "id": "L4",
+      "title": "Response-reward monotonicity",
+      "label": "monotone",
+      "scope": "Principal-favoring ties; equality alpha",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.response_reward_monotone",
+        "CombinatorialContracts.response_reward_mono"
+      ]
+    },
+    {
+      "id": "L5",
+      "title": "Welfare comparison",
+      "label": "welfare",
+      "scope": "Finite envelope, first appearance epoch charge",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.welfare_profit_comparison"
+      ]
+    },
+    {
+      "id": "L6",
+      "title": "Reward-anchored scale",
+      "label": "bracket",
+      "scope": "Positive anchor, n^2 width",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.reward_anchored_scale_of_optimal_response"
+      ]
+    },
+    {
+      "id": "T7",
+      "title": "Approximate-oracle robustness",
+      "label": "robust",
+      "scope": "Approximate response paired output, additive error 3tau/epsilon",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.Paper.theorem7",
+        "CombinatorialContracts.Paper.theorem7_empty"
+      ]
+    },
+    {
+      "id": "T8",
+      "title": "High-accuracy lower bound",
+      "label": "approx-lower",
+      "scope": "Randomized expectation, simulation sparse supply, polynomial cost queries",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.LowerBounds.hard_family",
+        "CombinatorialContracts.LowerBounds.accuracy_binary_bounds",
+        "CombinatorialContracts.LowerBounds.theorem8_worst_instance",
+        "CombinatorialContracts.LowerBounds.randomized_strategy_program_exact"
+      ]
+    },
+    {
+      "id": "P9i",
+      "title": "Joint tightness",
+      "label": "tightness",
+      "scope": "Explicit 2m-action construction, uniqueness, quadratic ratio",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.Tightness.proposition9_i"
+      ]
+    },
+    {
+      "id": "P9ii",
+      "title": "Welfare-gap tightness",
+      "label": "tightness",
+      "scope": "Normalized additive, monotone supermodular",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.Tightness.proposition9_ii"
+      ]
+    },
+    {
+      "id": "P10",
+      "title": "Equal-revenue anatomy",
+      "label": "equal-revenue",
+      "scope": "P=1, W=H(2^n-1), factor two anchor",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.EqualRevenue.proposition10"
+      ]
+    }
+  ],
+  "subsidiary": [
+    {
+      "id": "S01",
+      "claim": "Finite tied maximum exists",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.exists_response"
+      ]
+    },
+    {
+      "id": "S02",
+      "claim": "Optimal principal contract attained",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.exists_optimum"
+      ]
+    },
+    {
+      "id": "S03",
+      "claim": "Empty ground set and zero rewards/costs",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.empty_ground_zero",
+        "CombinatorialContracts.EndpointRegression.empty_ground_optimalValue"
+      ]
+    },
+    {
+      "id": "S04",
+      "claim": "Principal utility nonnegative and <= welfare",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.principal_nonneg",
+        "CombinatorialContracts.principal_le_welfare"
+      ]
+    },
+    {
+      "id": "S05",
+      "claim": "W>0 implies OPT>0",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.welfare_eq_zero_iff_optimalValue_eq_zero"
+      ]
+    },
+    {
+      "id": "S06",
+      "claim": "Finite affine-envelope partition with correct endpoint tie behavior",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.FiniteEnvelope.exists_partition",
+        "CombinatorialContracts.FiniteEnvelope.exists_partition_max_slope"
+      ]
+    },
+    {
+      "id": "S07",
+      "claim": "Envelope telescoping/integration identity",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.FiniteEnvelope.exists_partition"
+      ]
+    },
+    {
+      "id": "S08",
+      "claim": "First-appearance blocks partition used actions, count <=n",
+      "status": "source intermediate argument replaced by proved per-action derivation; independently accepted",
+      "lean_declarations": [
+        "CombinatorialContracts.finite_first_appearance_bound"
+      ],
+      "derivation_note": "Formal proof refines source first-appearance blocks into one charge per action, with at most card(ground set) charges; no literal epoch-block object is needed. Same inequality proved without additional assumptions."
+    },
+    {
+      "id": "S09",
+      "claim": "Epoch charge/exchange-sums inequality",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.finite_first_appearance_bound"
+      ]
+    },
+    {
+      "id": "S10",
+      "claim": "Subadditive singleton reward bound",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.subadditive_le_sum_singletons"
+      ]
+    },
+    {
+      "id": "S11",
+      "claim": "Largest positive singleton anchor exists",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.exists_reward_anchor"
+      ]
+    },
+    {
+      "id": "S12",
+      "claim": "Least geometric index exists and minimality",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.leastGridSteps_spec",
+        "CombinatorialContracts.leastGridSteps_minimal"
+      ]
+    },
+    {
+      "id": "S13",
+      "claim": "Shifted geometric grid covers exact approximation interval",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.geometric_cover_of_width"
+      ]
+    },
+    {
+      "id": "S14",
+      "claim": "All supply-query alpha strictly positive",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.shifted_contract_valid"
+      ]
+    },
+    {
+      "id": "S15",
+      "claim": "Larger-cost supply tie-breaking matches larger reward for alpha>0",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.supplyResponse_iff_response"
+      ]
+    },
+    {
+      "id": "S16",
+      "claim": "Deterministic finite candidate selection and correctness",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.Paper.theorem1",
+        "CombinatorialContracts.Paper.theorem2",
+        "CombinatorialContracts.OracleRun.output_mem"
+      ]
+    },
+    {
+      "id": "S17",
+      "claim": "Explicit query trace and exact counts",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.OracleProgram.algorithm1Program_counts",
+        "CombinatorialContracts.SupplyProgram.algorithm_counts",
+        "CombinatorialContracts.OracleProgram.robustProgram_counts"
+      ]
+    },
+    {
+      "id": "S18",
+      "claim": "Logarithmic geometric stopping bound including n=1",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.leastGridSteps_add_one_bound",
+        "CombinatorialContracts.leastGridSteps_one"
+      ]
+    },
+    {
+      "id": "S19",
+      "claim": "Exact-real arithmetic model; no unsupported bit complexity claim",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.OracleProgram",
+        "CombinatorialContracts.SupplyProgram"
+      ]
+    },
+    {
+      "id": "S20",
+      "claim": "Approximate welfare bracket and low-welfare branch",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.approximate_clipped_welfare_estimate",
+        "CombinatorialContracts.approximate_oracle_robustness"
+      ]
+    },
+    {
+      "id": "S21",
+      "claim": "Robust two-grid-step margin and response-error estimate",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.robust_source_grid_cover",
+        "CombinatorialContracts.approximate_undershoot_payoff"
+      ]
+    },
+    {
+      "id": "S22",
+      "claim": "Binary set-index bijection and equal-revenue upper envelope",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.EqualRevenue.binaryIndex_injective",
+        "CombinatorialContracts.EqualRevenue.binaryIndex_surjective",
+        "CombinatorialContracts.EqualRevenue.critical_isResponse"
+      ]
+    },
+    {
+      "id": "S23",
+      "claim": "Cost perturbation preserves nonnegative monotone supermodular costs",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.LowerBounds.hard_family"
+      ]
+    },
+    {
+      "id": "S24",
+      "claim": "Perturbed envelope and unique optimal contract",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.LowerBounds.unique_optimal_contract"
+      ]
+    },
+    {
+      "id": "S25",
+      "claim": "Sparse-supply external theorem proved/instantiated",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.EqualRevenue.approxSupply_card_le_of_critical_gaps",
+        "CombinatorialContracts.EqualRevenue.approxSupply_card_explicit"
+      ]
+    },
+    {
+      "id": "S26",
+      "claim": "Supply simulation with O(n\u00b2) cost-value queries",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.LowerBounds.compiledPointProgram_probes_le"
+      ]
+    },
+    {
+      "id": "S27",
+      "claim": "Randomized hidden-index identification expected-query lower bound",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.OracleIdentification.adaptive_identification",
+        "CombinatorialContracts.OracleIdentification.randomized_identification_lintegral"
+      ]
+    },
+    {
+      "id": "S28",
+      "claim": "Approximation success recovers hidden index",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.LowerBounds.decodeNat_correct"
+      ]
+    },
+    {
+      "id": "S29",
+      "claim": "Asymptotics gamma=Theta(2^-n), exponential supply bound",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.LowerBounds.accuracy_binary_bounds",
+        "CombinatorialContracts.LowerBounds.theorem8_worst_instance",
+        "CombinatorialContracts.eventually_exponential_supply_lower_bound_ennreal"
+      ]
+    },
+    {
+      "id": "S30",
+      "claim": "Tightness construction upper envelopes and exclusion of all other sets",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.Tightness.proposition9_i",
+        "CombinatorialContracts.Tightness.proposition9_ii"
+      ]
+    },
+    {
+      "id": "S31",
+      "claim": "Normalization/scaling leaves responses and ratios unchanged",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.scaled_response_iff",
+        "CombinatorialContracts.scaled_welfare",
+        "CombinatorialContracts.scaled_optimalValue",
+        "CombinatorialContracts.Tightness.Bundle.normalized_localization_ratio"
+      ]
+    },
+    {
+      "id": "S32",
+      "claim": "Harmonic welfare Theta(n) bounds",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.EqualRevenue.harmonic_binary_bounds"
+      ]
+    },
+    {
+      "id": "S33",
+      "claim": "History-dependent strategy halting on finite actual family is compiled to a terminating query tree preserving results and counts",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.LowerBounds.exists_finite_program_of_termination",
+        "CombinatorialContracts.LowerBounds.randomized_strategy_program_exact"
+      ]
+    },
+    {
+      "id": "S34",
+      "claim": "Infinite/mixed expected-query counts handled in actual-program ENNReal asymptotic theorem; hidden-average to worst-instance consequence",
+      "status": "proved; frozen semantic and mechanical release recorded separately",
+      "lean_declarations": [
+        "CombinatorialContracts.LowerBounds.randomized_high_accuracy_query_bound_lintegral",
+        "CombinatorialContracts.LowerBounds.exists_hidden_expected_supply_ge_average_ennreal",
+        "CombinatorialContracts.LowerBounds.theorem8_worst_instance"
+      ]
+    }
+  ],
+  "external_dependencies": [
+    {
+      "source": "arXiv:2403.09794, cited reference6 AppendixE",
+      "obligation": "Sparse-supply property and exact-query lower bound; reconstruct fully, no axiom",
+      "status": "reconstructed and proved; no external theorem axiom"
+    },
+    {
+      "source": "Response/envelope facts also cited to references3,4,6",
+      "obligation": "Prove self-contained rather than assume",
+      "status": "reconstructed and proved; no external theorem axiom"
+    },
+    {
+      "source": "Yao\u2019s principle / randomized search lower bound",
+      "obligation": "Prove required finite distribution argument self-contained",
+      "status": "reconstructed and proved; no external theorem axiom"
+    }
+  ],
+  "last_updated_utc": "2026-10-03T09:58:00Z",
+  "scope_note": "10 numbered source results; Proposition9 is split into two entries.34 supporting obligations include semantic/oracle-model declarations and explicitly documented alternative derivations. Final release acceptance is in the separate hash-bound certificates."
+}

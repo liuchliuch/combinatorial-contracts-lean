@@ -1,0 +1,502 @@
+CombinatorialContracts.EndpointRegression.empty_ground_optimalValue (M : CombinatorialContracts.Model (Fin 0)) :
+  CombinatorialContracts.optimalValue M = 0
+CombinatorialContracts.EqualRevenue.approxSupply_card_explicit (n : ℕ) (p : Fin n → ℝ) :
+  (CombinatorialContracts.EqualRevenue.approxSupply n p (1 / (8 * ↑(2 ^ n - 1) ^ 2))).card ≤ 4 * (n + 1) ^ 2
+CombinatorialContracts.EqualRevenue.approxSupply_card_le_of_critical_gaps {n : ℕ} (hn : 2 ≤ n) (p : Fin n → ℝ) {σ : ℝ}
+  (hσpos : 0 < σ)
+  (hσ :
+    ∀ t ∈ Finset.Ico 1 (2 ^ n - 1),
+      σ <
+        1 / 2 *
+          (CombinatorialContracts.EqualRevenue.critical (t + 1) - CombinatorialContracts.EqualRevenue.critical t)) :
+  (CombinatorialContracts.EqualRevenue.approxSupply n p σ).card ≤ 4 * (n + 1) ^ 2
+CombinatorialContracts.EqualRevenue.binaryIndex_injective (n : ℕ) :
+  Function.Injective CombinatorialContracts.EqualRevenue.binaryIndex
+CombinatorialContracts.EqualRevenue.binaryIndex_surjective {n t : ℕ} (ht : t < 2 ^ n) :
+  ∃ S, CombinatorialContracts.EqualRevenue.binaryIndex S = t
+CombinatorialContracts.EqualRevenue.critical_isResponse {n : ℕ} {S : Finset (Fin n)}
+  (hS : 0 < CombinatorialContracts.EqualRevenue.binaryIndex S) :
+  CombinatorialContracts.IsResponse (CombinatorialContracts.EqualRevenue.model n)
+    (CombinatorialContracts.EqualRevenue.critical (CombinatorialContracts.EqualRevenue.binaryIndex S)) S
+CombinatorialContracts.EqualRevenue.harmonic_binary_bounds (n : ℕ) :
+  ↑n / 2 ≤ CombinatorialContracts.EqualRevenue.harmonic (2 ^ n - 1) ∧
+    CombinatorialContracts.EqualRevenue.harmonic (2 ^ n - 1) ≤ ↑n
+CombinatorialContracts.EqualRevenue.proposition10 {n : ℕ} (hn : 0 < n) :
+  CombinatorialContracts.optimalValue (CombinatorialContracts.EqualRevenue.model n) = 1 ∧
+    CombinatorialContracts.welfare (CombinatorialContracts.EqualRevenue.model n) =
+        CombinatorialContracts.EqualRevenue.harmonic (2 ^ n - 1) ∧
+      ↑n / 2 ≤ CombinatorialContracts.EqualRevenue.harmonic (2 ^ n - 1) ∧
+        CombinatorialContracts.EqualRevenue.harmonic (2 ^ n - 1) ≤ ↑n ∧
+          ∀ (S : Finset (Fin n)),
+            ∀ j ∈ S,
+              (∀ i ∈ S,
+                  (CombinatorialContracts.EqualRevenue.model n).reward {i} ≤
+                    (CombinatorialContracts.EqualRevenue.model n).reward {j}) →
+                1 / (2 * (CombinatorialContracts.EqualRevenue.model n).reward {j}) <
+                    1 -
+                      CombinatorialContracts.EqualRevenue.critical (CombinatorialContracts.EqualRevenue.binaryIndex S) ∧
+                  1 - CombinatorialContracts.EqualRevenue.critical (CombinatorialContracts.EqualRevenue.binaryIndex S) ≤
+                    1 / (CombinatorialContracts.EqualRevenue.model n).reward {j}
+CombinatorialContracts.FiniteEnvelope.exists_partition.{u_1} {ι : Type u_1} [Fintype ι] [Nonempty ι] (r c : ι → ℝ) :
+  ∃ k a s,
+    0 < k ∧
+      a 0 = 0 ∧
+        a k = 1 ∧
+          (∀ t < k, a t < a (t + 1)) ∧
+            (∀ t ≤ k, 0 ≤ a t ∧ a t ≤ 1) ∧
+              (∀ t < k, ∀ x ∈ Set.Icc (a t) (a (t + 1)), CombinatorialContracts.FiniteEnvelope.IsActive r c x (s t)) ∧
+                ∑ t ∈ Finset.range k, (a (t + 1) - a t) * r (s t) =
+                  CombinatorialContracts.FiniteEnvelope.envelope r c 1 -
+                    CombinatorialContracts.FiniteEnvelope.envelope r c 0
+CombinatorialContracts.FiniteEnvelope.exists_partition_max_slope.{u_1} {ι : Type u_1} [Fintype ι] [Nonempty ι]
+  (r c : ι → ℝ) :
+  ∃ k a s,
+    0 < k ∧
+      a 0 = 0 ∧
+        a k = 1 ∧
+          (∀ t < k, a t < a (t + 1)) ∧
+            (∀ t ≤ k, 0 ≤ a t ∧ a t ≤ 1) ∧
+              (∀ t < k, ∀ x ∈ Set.Icc (a t) (a (t + 1)), CombinatorialContracts.FiniteEnvelope.IsActive r c x (s t)) ∧
+                (∀ t < k,
+                    ∀ x ∈ Set.Ico (a t) (a (t + 1)),
+                      ∀ (j : ι), CombinatorialContracts.FiniteEnvelope.IsActive r c x j → r j ≤ r (s t)) ∧
+                  ∑ t ∈ Finset.range k, (a (t + 1) - a t) * r (s t) =
+                    CombinatorialContracts.FiniteEnvelope.envelope r c 1 -
+                      CombinatorialContracts.FiniteEnvelope.envelope r c 0
+CombinatorialContracts.LowerBounds.accuracy_binary_bounds {n : ℕ} (hn : 0 < n) :
+  1 / (32 * 2 ^ n) ≤ CombinatorialContracts.LowerBounds.accuracy (2 ^ n - 1) ∧
+    CombinatorialContracts.LowerBounds.accuracy (2 ^ n - 1) ≤ 1 / (16 * 2 ^ n)
+CombinatorialContracts.LowerBounds.compiledPointProgram_probes_le.{u_1} {α : Type u_1} (n k : ℕ)
+  (program : CombinatorialContracts.SupplyProgram (Fin n) α) :
+  CombinatorialContracts.OracleIdentification.PointProgram.probes
+      (CombinatorialContracts.OracleIdentification.pointOracle k)
+      (CombinatorialContracts.LowerBounds.compiledPointProgram n program) ≤
+    4 * (n + 1) ^ 2 *
+        List.count CombinatorialContracts.QueryKind.response
+          (CombinatorialContracts.LowerBounds.execute n k program).2 +
+      List.count CombinatorialContracts.QueryKind.cost (CombinatorialContracts.LowerBounds.execute n k program).2
+CombinatorialContracts.LowerBounds.corollary3_exact_worst_instance.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ]
+  (program : (n : ℕ) → Ω → CombinatorialContracts.SupplyProgram (Fin n) ℝ) (δ C : ℝ) (d : ℕ) (hδ : 0 < δ)
+  (hs :
+    ∀ (n : ℕ),
+      2 ≤ n →
+        ∀ k ∈ CombinatorialContracts.LowerBounds.hiddenIndices n,
+          MeasureTheory.Integrable (fun ω => CombinatorialContracts.LowerBounds.exactIndicator n (program n ω) k) μ)
+  (hgood :
+    ∀ (n : ℕ),
+      2 ≤ n →
+        ∀ k ∈ CombinatorialContracts.LowerBounds.hiddenIndices n,
+          δ ≤ ∫ (ω : Ω), CombinatorialContracts.LowerBounds.exactIndicator n (program n ω) k ∂μ)
+  (hQ :
+    ∀ (n : ℕ),
+      2 ≤ n →
+        ∀ k ∈ CombinatorialContracts.LowerBounds.hiddenIndices n,
+          Measurable fun ω =>
+            ↑(List.count CombinatorialContracts.QueryKind.response
+                (CombinatorialContracts.LowerBounds.execute n k (program n ω)).2))
+  (hV : ∀ (n : ℕ), 2 ≤ n → Measurable fun ω => CombinatorialContracts.LowerBounds.expectedValueCalls n (program n ω))
+  (hpoly :
+    ∀ᶠ (n : ℕ) in Filter.atTop,
+      ∫⁻ (ω : Ω), ENNReal.ofReal (CombinatorialContracts.LowerBounds.expectedValueCalls n (program n ω)) ∂μ ≤
+        ENNReal.ofReal (C * (↑n + 1) ^ d)) :
+  ∀ᶠ (n : ℕ) in Filter.atTop,
+    ∃ k ∈ CombinatorialContracts.LowerBounds.hiddenIndices n,
+      ENNReal.ofReal ((3 / 2) ^ n) ≤
+        ∫⁻ (ω : Ω),
+          ↑(List.count CombinatorialContracts.QueryKind.response
+              (CombinatorialContracts.LowerBounds.execute n k (program n ω)).2) ∂μ
+CombinatorialContracts.LowerBounds.decodeNat_correct {n k : ℕ} (hn : 2 ≤ n)
+  (hk : k ∈ CombinatorialContracts.LowerBounds.hiddenIndices n) {α : ℝ}
+  (happrox :
+    (1 - CombinatorialContracts.LowerBounds.accuracy (2 ^ n - 1)) *
+        CombinatorialContracts.optimalValue (CombinatorialContracts.LowerBounds.instanceAt n k) ≤
+      CombinatorialContracts.principal (CombinatorialContracts.LowerBounds.instanceAt n k) α) :
+  CombinatorialContracts.LowerBounds.decodeNat n α = k
+CombinatorialContracts.LowerBounds.exists_finite_program_of_termination.{u_1, u_2, u_3} {ι : Type u_1} {α : Type u_2}
+  {κ : Type u_3} [DecidableEq κ] (strategy : CombinatorialContracts.LowerBounds.HistoryStrategy ι α) (fallback : α)
+  (K : Finset κ) (supply : κ → (ι → ℝ) → Finset ι) (value costValue : κ → Finset ι → ℝ)
+  (hterm :
+    ∀ k ∈ K,
+      ∃ result,
+        CombinatorialContracts.LowerBounds.StrategyTerminatesWith strategy (supply k) (value k) (costValue k) []
+          result) :
+  ∃ program,
+    ∀ k ∈ K,
+      ∀ (result : α × List CombinatorialContracts.QueryKind),
+        CombinatorialContracts.LowerBounds.StrategyTerminatesWith strategy (supply k) (value k) (costValue k) []
+            result →
+          CombinatorialContracts.SupplyProgram.eval (supply k) (value k) (costValue k) program = result
+CombinatorialContracts.LowerBounds.exists_hidden_expected_supply_ge_average_ennreal.{u_1} {Ω : Type u_1}
+  [MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω) {n : ℕ} (hn : 0 < n)
+  (program : Ω → CombinatorialContracts.SupplyProgram (Fin n) ℝ)
+  (hQ :
+    ∀ k ∈ CombinatorialContracts.LowerBounds.hiddenIndices n,
+      Measurable fun ω =>
+        ↑(List.count CombinatorialContracts.QueryKind.response
+            (CombinatorialContracts.LowerBounds.execute n k (program ω)).2)) :
+  ∃ k ∈ CombinatorialContracts.LowerBounds.hiddenIndices n,
+    ∫⁻ (ω : Ω), ENNReal.ofReal (CombinatorialContracts.LowerBounds.expectedSupplyCalls n (program ω)) ∂μ ≤
+      ∫⁻ (ω : Ω),
+        ↑(List.count CombinatorialContracts.QueryKind.response
+            (CombinatorialContracts.LowerBounds.execute n k (program ω)).2) ∂μ
+CombinatorialContracts.LowerBounds.hard_family {n : ℕ} (hn : 2 ≤ n) (k : CombinatorialContracts.LowerBounds.Hidden n) :
+  CombinatorialContracts.HasAdditiveReward (CombinatorialContracts.LowerBounds.model n ↑k ⋯) ∧
+    Monotone (CombinatorialContracts.LowerBounds.model n ↑k ⋯).cost ∧
+      (∀ (S T : Finset (Fin n)),
+          S ⊆ T →
+            ∀ i ∉ T,
+              (CombinatorialContracts.LowerBounds.model n ↑k ⋯).cost (insert i S) -
+                  (CombinatorialContracts.LowerBounds.model n ↑k ⋯).cost S ≤
+                (CombinatorialContracts.LowerBounds.model n ↑k ⋯).cost (insert i T) -
+                  (CombinatorialContracts.LowerBounds.model n ↑k ⋯).cost T) ∧
+        CombinatorialContracts.optimalValue (CombinatorialContracts.LowerBounds.model n ↑k ⋯) =
+          1 + CombinatorialContracts.LowerBounds.perturbation (2 ^ n - 1) * ↑↑k
+CombinatorialContracts.LowerBounds.randomized_high_accuracy_query_bound_lintegral.{u_1} {Ω : Type u_1}
+  [MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] {n : ℕ} (hn : 2 ≤ n)
+  (program : Ω → CombinatorialContracts.SupplyProgram (Fin n) ℝ)
+  (hV : Measurable fun ω => CombinatorialContracts.LowerBounds.expectedValueCalls n (program ω)) :
+  2 ^ (n - 1) *
+      ∫⁻ (ω : Ω), ENNReal.ofReal (CombinatorialContracts.LowerBounds.approximationProbability n (program ω)) ∂μ ≤
+    2 *
+        (↑(4 * (n + 1) ^ 2) *
+            ∫⁻ (ω : Ω), ENNReal.ofReal (CombinatorialContracts.LowerBounds.expectedSupplyCalls n (program ω)) ∂μ +
+          ∫⁻ (ω : Ω), ENNReal.ofReal (CombinatorialContracts.LowerBounds.expectedValueCalls n (program ω)) ∂μ) +
+      1
+CombinatorialContracts.LowerBounds.randomized_strategy_program_exact.{u_1, u_2} {Ω : Type u_1} {α : Type u_2} (n : ℕ)
+  (strategy : Ω → CombinatorialContracts.LowerBounds.HistoryStrategy (Fin n) α) (fallback : α) (ω : Ω)
+  (hterm :
+    ∀ k ∈ CombinatorialContracts.LowerBounds.hiddenIndices n,
+      ∃ result, CombinatorialContracts.LowerBounds.HiddenStrategyTerminatesWith n k (strategy ω) result)
+  {k : ℕ} (hk : k ∈ CombinatorialContracts.LowerBounds.hiddenIndices n)
+  {result : α × List CombinatorialContracts.QueryKind}
+  (hr : CombinatorialContracts.LowerBounds.HiddenStrategyTerminatesWith n k (strategy ω) result) :
+  CombinatorialContracts.LowerBounds.execute n k
+      (CombinatorialContracts.LowerBounds.finiteStrategyProgram n (strategy ω) fallback) =
+    result
+CombinatorialContracts.LowerBounds.theorem8_worst_instance.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ]
+  (program : (n : ℕ) → Ω → CombinatorialContracts.SupplyProgram (Fin n) ℝ) (δ C : ℝ) (d : ℕ) (hδ : 0 < δ)
+  (hs :
+    ∀ (n : ℕ),
+      2 ≤ n →
+        ∀ k ∈ CombinatorialContracts.LowerBounds.hiddenIndices n,
+          MeasureTheory.Integrable
+            (fun ω => CombinatorialContracts.LowerBounds.approximationIndicator n (program n ω) k) μ)
+  (hgood :
+    ∀ (n : ℕ),
+      2 ≤ n →
+        ∀ k ∈ CombinatorialContracts.LowerBounds.hiddenIndices n,
+          δ ≤ ∫ (ω : Ω), CombinatorialContracts.LowerBounds.approximationIndicator n (program n ω) k ∂μ)
+  (hQ :
+    ∀ (n : ℕ),
+      2 ≤ n →
+        ∀ k ∈ CombinatorialContracts.LowerBounds.hiddenIndices n,
+          Measurable fun ω =>
+            ↑(List.count CombinatorialContracts.QueryKind.response
+                (CombinatorialContracts.LowerBounds.execute n k (program n ω)).2))
+  (hV : ∀ (n : ℕ), 2 ≤ n → Measurable fun ω => CombinatorialContracts.LowerBounds.expectedValueCalls n (program n ω))
+  (hpoly :
+    ∀ᶠ (n : ℕ) in Filter.atTop,
+      ∫⁻ (ω : Ω), ENNReal.ofReal (CombinatorialContracts.LowerBounds.expectedValueCalls n (program n ω)) ∂μ ≤
+        ENNReal.ofReal (C * (↑n + 1) ^ d)) :
+  ∀ᶠ (n : ℕ) in Filter.atTop,
+    ∃ k ∈ CombinatorialContracts.LowerBounds.hiddenIndices n,
+      ENNReal.ofReal ((3 / 2) ^ n) ≤
+        ∫⁻ (ω : Ω),
+          ↑(List.count CombinatorialContracts.QueryKind.response
+              (CombinatorialContracts.LowerBounds.execute n k (program n ω)).2) ∂μ
+CombinatorialContracts.LowerBounds.unique_optimal_contract {n k : ℕ} (hk : 2 ≤ k) (hkn : k < 2 ^ n) {α : ℝ}
+  (hopt :
+    CombinatorialContracts.principal (CombinatorialContracts.LowerBounds.model n k hk) α =
+      CombinatorialContracts.optimalValue (CombinatorialContracts.LowerBounds.model n k hk)) :
+  α = CombinatorialContracts.LowerBounds.entry k (CombinatorialContracts.LowerBounds.perturbation (2 ^ n - 1)) k
+CombinatorialContracts.OracleIdentification.adaptive_identification.{u_1} {κ : Type u_1} [DecidableEq κ] (K : Finset κ)
+  (hK : K.Nonempty) (p : CombinatorialContracts.OracleIdentification.PointProgram κ κ) :
+  ↑K.card * CombinatorialContracts.OracleIdentification.successProbability K p ≤
+    2 * CombinatorialContracts.OracleIdentification.expectedProbes K p + 1
+CombinatorialContracts.OracleIdentification.randomized_identification_lintegral.{u_1, u_2} {κ : Type u_1}
+  [DecidableEq κ] {Ω : Type u_2} [MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+  [MeasureTheory.IsProbabilityMeasure μ] (K : Finset κ) (hK : K.Nonempty)
+  (program : Ω → CombinatorialContracts.OracleIdentification.PointProgram κ κ) :
+  ↑K.card *
+      ∫⁻ (ω : Ω), ENNReal.ofReal (CombinatorialContracts.OracleIdentification.successProbability K (program ω)) ∂μ ≤
+    2 * ∫⁻ (ω : Ω), ENNReal.ofReal (CombinatorialContracts.OracleIdentification.expectedProbes K (program ω)) ∂μ + 1
+CombinatorialContracts.OracleProgram.{u_1, u_2} (ι : Type u_1) (α : Type u_2) : Type (max u_1 u_2)
+CombinatorialContracts.OracleProgram.algorithm1Program_counts.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (oracle : ℝ → Finset ι) (value costValue : Finset ι → ℝ) (ε : ℝ) :
+  have executed :=
+    CombinatorialContracts.OracleProgram.eval oracle value costValue
+      (CombinatorialContracts.OracleProgram.algorithm1Program ε);
+  List.count CombinatorialContracts.QueryKind.response executed.2 = executed.1.responseQueries ∧
+    List.count CombinatorialContracts.QueryKind.reward executed.2 = executed.1.rewardQueries ∧
+      List.count CombinatorialContracts.QueryKind.cost executed.2 = executed.1.costQueries
+CombinatorialContracts.OracleProgram.robustProgram_counts.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (oracle : ℕ → ℝ → Finset ι) (value costValue : Finset ι → ℝ) (ε τ : ℝ) :
+  have executed :=
+    CombinatorialContracts.OracleProgram.evalIndexed oracle value costValue
+      (CombinatorialContracts.OracleProgram.robustProgram ε τ) 0;
+  List.count CombinatorialContracts.QueryKind.response executed.2 = executed.1.responseQueries ∧
+    List.count CombinatorialContracts.QueryKind.reward executed.2 = executed.1.rewardQueries ∧
+      List.count CombinatorialContracts.QueryKind.cost executed.2 = executed.1.costQueries
+CombinatorialContracts.OracleRun.output_mem.{u_1} {ι : Type u_1} (run : CombinatorialContracts.OracleRun ι) :
+  run.output ∈ run.initial :: run.grid
+CombinatorialContracts.Paper.theorem1.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) (hadd : CombinatorialContracts.HasAdditiveReward M) (supply : (ι → ℝ) → Finset ι)
+  (hsupply : ∀ (p : ι → ℝ), (∀ (i : ι), 0 ≤ p i) → CombinatorialContracts.IsSupplyResponse M p (supply p)) {ε : ℝ}
+  (hε : 0 < ε) (hε1 : ε < 1) (hn : 1 ≤ Fintype.card ι) :
+  have executed :=
+    CombinatorialContracts.SupplyProgram.eval supply M.reward M.cost (CombinatorialContracts.SupplyProgram.algorithm ε);
+  have r := executed.1.output;
+  r.share ∈ Set.Icc 0 1 ∧
+    CombinatorialContracts.IsResponse M r.share r.response ∧
+      r.reward = M.reward r.response ∧
+        r.utility = CombinatorialContracts.principal M r.share ∧
+          (1 - ε) * CombinatorialContracts.optimalValue M ≤ CombinatorialContracts.principal M r.share ∧
+            r ∈ executed.1.initial :: executed.1.grid ∧
+              List.count CombinatorialContracts.QueryKind.response executed.2 = executed.1.responseQueries ∧
+                ↑(List.count CombinatorialContracts.QueryKind.response executed.2) ≤
+                    20 * ↑(Fintype.card ι) * Real.log (↑(Fintype.card ι) + 1) / ε ∧
+                  List.count CombinatorialContracts.QueryKind.reward executed.2 = Fintype.card ι ∧
+                    List.count CombinatorialContracts.QueryKind.cost executed.2 = 1
+CombinatorialContracts.Paper.theorem1_empty.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) (hadd : CombinatorialContracts.HasAdditiveReward M) (supply : (ι → ℝ) → Finset ι)
+  (hsupply : ∀ (p : ι → ℝ), (∀ (i : ι), 0 ≤ p i) → CombinatorialContracts.IsSupplyResponse M p (supply p))
+  (hn : Fintype.card ι = 0) (ε : ℝ) :
+  have executed :=
+    CombinatorialContracts.SupplyProgram.eval supply M.reward M.cost (CombinatorialContracts.SupplyProgram.algorithm ε);
+  executed.1.output.share = 1 ∧
+    CombinatorialContracts.principal M executed.1.output.share = 0 ∧
+      CombinatorialContracts.optimalValue M = 0 ∧
+        List.count CombinatorialContracts.QueryKind.response executed.2 = 1 ∧
+          List.count CombinatorialContracts.QueryKind.reward executed.2 = 0 ∧
+            List.count CombinatorialContracts.QueryKind.cost executed.2 = 1
+CombinatorialContracts.Paper.theorem2.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) {oracle : ℝ → Finset ι}
+  (ho : CombinatorialContracts.IsExactPositiveOracle M oracle) {ε : ℝ} (hε : 0 < ε) (hε1 : ε < 1)
+  (hn : 1 ≤ Fintype.card ι) :
+  have executed :=
+    CombinatorialContracts.OracleProgram.eval oracle M.reward M.cost
+      (CombinatorialContracts.OracleProgram.algorithm1Program ε);
+  have r := executed.1.output;
+  r.share ∈ Set.Icc 0 1 ∧
+    CombinatorialContracts.IsResponse M r.share r.response ∧
+      r.reward = M.reward r.response ∧
+        r.utility = CombinatorialContracts.principal M r.share ∧
+          (1 - ε) * CombinatorialContracts.optimalValue M ≤ CombinatorialContracts.principal M r.share ∧
+            r ∈ executed.1.initial :: executed.1.grid ∧
+              List.count CombinatorialContracts.QueryKind.response executed.2 = executed.1.responseQueries ∧
+                List.count CombinatorialContracts.QueryKind.reward executed.2 = executed.1.rewardQueries ∧
+                  ↑(List.count CombinatorialContracts.QueryKind.response executed.2) ≤
+                      20 * ↑(Fintype.card ι) * Real.log (↑(Fintype.card ι) + 1) / ε ∧
+                    ↑(List.count CombinatorialContracts.QueryKind.reward executed.2) ≤
+                        20 * ↑(Fintype.card ι) * Real.log (↑(Fintype.card ι) + 1) / ε ∧
+                      List.count CombinatorialContracts.QueryKind.cost executed.2 = 1
+CombinatorialContracts.Paper.theorem2_empty.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) {oracle : ℝ → Finset ι}
+  (ho : CombinatorialContracts.IsExactPositiveOracle M oracle) (hn : Fintype.card ι = 0) (ε : ℝ) :
+  have executed :=
+    CombinatorialContracts.OracleProgram.eval oracle M.reward M.cost
+      (CombinatorialContracts.OracleProgram.algorithm1Program ε);
+  executed.1.output.share = 1 ∧
+    CombinatorialContracts.principal M executed.1.output.share = 0 ∧
+      CombinatorialContracts.optimalValue M = 0 ∧
+        List.count CombinatorialContracts.QueryKind.response executed.2 = 1 ∧
+          List.count CombinatorialContracts.QueryKind.reward executed.2 = 1 ∧
+            List.count CombinatorialContracts.QueryKind.cost executed.2 = 1
+CombinatorialContracts.Paper.theorem7.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) {oracle : ℕ → ℝ → Finset ι} {ε τ : ℝ}
+  (ho : CombinatorialContracts.IsApproxOracle M τ oracle) (hε : 0 < ε) (hε1 : ε < 1) (hτ : 0 ≤ τ)
+  (hn : 1 ≤ Fintype.card ι) :
+  have executed :=
+    CombinatorialContracts.OracleProgram.evalIndexed oracle M.reward M.cost
+      (CombinatorialContracts.OracleProgram.robustProgram ε τ) 0;
+  have r := executed.1.output;
+  r.share ∈ Set.Icc 0 1 ∧
+    CombinatorialContracts.IsApproxBestResponse M τ r.share r.response ∧
+      r.reward = M.reward r.response ∧
+        (1 - ε) * CombinatorialContracts.optimalValue M - 3 * τ / ε ≤ (1 - r.share) * M.reward r.response ∧
+          r ∈ executed.1.initial :: executed.1.grid ∧
+            (∃ t, r = CombinatorialContracts.QueryRecord.query (oracle t) M.reward r.share) ∧
+              List.count CombinatorialContracts.QueryKind.response executed.2 = executed.1.responseQueries ∧
+                List.count CombinatorialContracts.QueryKind.reward executed.2 = executed.1.rewardQueries ∧
+                  ↑(List.count CombinatorialContracts.QueryKind.response executed.2) ≤
+                      20 * ↑(Fintype.card ι) * Real.log (↑(Fintype.card ι) + 1) / ε ∧
+                    ↑(List.count CombinatorialContracts.QueryKind.reward executed.2) ≤
+                        20 * ↑(Fintype.card ι) * Real.log (↑(Fintype.card ι) + 1) / ε ∧
+                      List.count CombinatorialContracts.QueryKind.cost executed.2 = 1
+CombinatorialContracts.Paper.theorem7_empty.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) (oracle : ℕ → ℝ → Finset ι) (hn : Fintype.card ι = 0) (ε : ℝ) {τ : ℝ}
+  (hτ : 0 ≤ τ) :
+  have executed :=
+    CombinatorialContracts.OracleProgram.evalIndexed oracle M.reward M.cost
+      (CombinatorialContracts.OracleProgram.robustProgram ε τ) 0;
+  executed.1.output.share = 1 ∧
+    executed.1.output.response = ∅ ∧
+      (1 - executed.1.output.share) * M.reward executed.1.output.response = 0 ∧
+        CombinatorialContracts.optimalValue M = 0 ∧
+          List.count CombinatorialContracts.QueryKind.response executed.2 = 1 ∧
+            List.count CombinatorialContracts.QueryKind.reward executed.2 = 1 ∧
+              List.count CombinatorialContracts.QueryKind.cost executed.2 = 1
+CombinatorialContracts.SupplyProgram.{u_1, u_2} (ι : Type u_1) (α : Type u_2) : Type (max u_1 u_2)
+CombinatorialContracts.SupplyProgram.algorithm_counts.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (supply : (ι → ℝ) → Finset ι) (value costValue : Finset ι → ℝ) (ε : ℝ) :
+  have executed :=
+    CombinatorialContracts.SupplyProgram.eval supply value costValue (CombinatorialContracts.SupplyProgram.algorithm ε);
+  List.count CombinatorialContracts.QueryKind.response executed.2 = executed.1.responseQueries ∧
+    List.count CombinatorialContracts.QueryKind.reward executed.2 = Fintype.card ι ∧
+      List.count CombinatorialContracts.QueryKind.cost executed.2 = 1
+CombinatorialContracts.Tightness.Bundle.normalized_localization_ratio {m : ℕ} {η : ℝ} (hm : 2 ≤ m) (hη : 0 < η)
+  (hη1 : η < 1) (i : CombinatorialContracts.Tightness.Bundle.Action m)
+  (hi : i ∈ CombinatorialContracts.Tightness.Bundle.A m) :
+  CombinatorialContracts.welfare (CombinatorialContracts.Tightness.Bundle.normalizedModel m η hm hη hη1) /
+      ((1 - (1 - (1 + η) / ↑m)) * (CombinatorialContracts.Tightness.Bundle.normalizedModel m η hm hη hη1).reward {i}) =
+    ↑m * (1 + η + ↑m / 2) / (1 + η)
+CombinatorialContracts.Tightness.proposition9_i (m : ℕ) (η : ℝ) (hm : 2 ≤ m) (hη : 0 < η) (hη1 : η < 1) :
+  ∃ M,
+    CombinatorialContracts.HasAdditiveReward M ∧
+      M.reward Finset.univ = 1 ∧
+        (∀ (T : Finset (CombinatorialContracts.Tightness.Bundle.Action m)), M.reward T ≤ 1) ∧
+          ∃ α ∈ Set.Icc 0 1,
+            ∃ S,
+              CombinatorialContracts.IsResponse M α S ∧
+                (1 - α) * M.reward S = CombinatorialContracts.optimalValue M ∧
+                  (∀ β ∈ Set.Icc 0 1,
+                      ∀ (T : Finset (CombinatorialContracts.Tightness.Bundle.Action m)),
+                        CombinatorialContracts.IsResponse M β T →
+                          (1 - β) * M.reward T = CombinatorialContracts.optimalValue M → β = α ∧ T = S) ∧
+                    ∃ j ∈ S,
+                      0 < M.reward {j} ∧
+                        (∀ i ∈ S, M.reward {i} ≤ M.reward {j}) ∧
+                          CombinatorialContracts.welfare M / ((1 - α) * M.reward {j}) =
+                              ↑m * (1 + η + ↑m / 2) / (1 + η) ∧
+                            ↑(2 * m) ^ 2 / 16 ≤ CombinatorialContracts.welfare M / ((1 - α) * M.reward {j})
+CombinatorialContracts.Tightness.proposition9_ii (n : ℕ) (r : ℝ) (hn : 2 ≤ n) (hr : 1 < r) :
+  ∃ M,
+    CombinatorialContracts.HasAdditiveReward M ∧
+      M.reward Finset.univ = 1 ∧
+        (∀ (S : Finset (Fin n)), M.reward S ≤ 1) ∧
+          Monotone M.cost ∧
+            (∀ (S T : Finset (Fin n)),
+                S ⊆ T → ∀ i ∉ T, M.cost (insert i S) - M.cost S ≤ M.cost (insert i T) - M.cost T) ∧
+              CombinatorialContracts.welfare M / CombinatorialContracts.optimalValue M = ↑n - (↑n - 1) / r
+CombinatorialContracts.approximate_clipped_welfare_estimate.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) {τ : ℝ} {T : Finset ι}
+  (hT : CombinatorialContracts.IsApproxBestResponse M τ 1 T) :
+  max 0 (M.reward T - M.cost T) ≤ CombinatorialContracts.welfare M ∧
+    CombinatorialContracts.welfare M ≤ max 0 (M.reward T - M.cost T) + τ
+CombinatorialContracts.approximate_oracle_robustness.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) {oracle : ℕ → ℝ → Finset ι} {ε τ : ℝ}
+  (ho : CombinatorialContracts.IsApproxOracle M τ oracle) (hε : 0 < ε) (hε1 : ε < 1) (hτ : 0 ≤ τ) :
+  (1 - ε) * CombinatorialContracts.optimalValue M - 3 * τ / ε ≤
+    (CombinatorialContracts.robustAlgorithm oracle M.reward M.cost ε τ).output.utility
+CombinatorialContracts.approximate_undershoot_payoff.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) {ε τ δ : ℝ} {T : Finset ι} (hε : 0 < ε) (hε1 : ε < 1) (hτ : 0 ≤ τ)
+  (hP : 0 < CombinatorialContracts.optimalValue M) (hlo : (1 - ε / 3) ^ 2 * (1 - CombinatorialContracts.optimum M) ≤ δ)
+  (hhi : δ ≤ (1 - ε / 3) * (1 - CombinatorialContracts.optimum M))
+  (hT : CombinatorialContracts.IsApproxBestResponse M τ (1 - δ) T) :
+  (1 - ε) * CombinatorialContracts.optimalValue M - 3 * τ / ε ≤ δ * M.reward T
+CombinatorialContracts.empty_ground_zero.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) (hn : Fintype.card ι = 0) :
+  CombinatorialContracts.welfare M = 0 ∧ CombinatorialContracts.optimalValue M = 0
+CombinatorialContracts.eventually_exponential_supply_lower_bound_ennreal (Q V : ℕ → ENNReal) (δ C : ℝ) (d : ℕ)
+  (hδ : 0 < δ)
+  (hqueries :
+    ∀ᶠ (n : ℕ) in Filter.atTop,
+      ENNReal.ofReal (δ * 2 ^ (n - 1)) ≤ ENNReal.ofReal (8 * (↑n + 1) ^ 2) * Q n + 2 * V n + 1)
+  (hpoly : ∀ᶠ (n : ℕ) in Filter.atTop, V n ≤ ENNReal.ofReal (C * (↑n + 1) ^ d)) :
+  ∀ᶠ (n : ℕ) in Filter.atTop, ENNReal.ofReal ((3 / 2) ^ n) ≤ Q n
+CombinatorialContracts.exists_optimum.{u} {ι : Type u} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) :
+  ∃ α ∈ Set.Icc 0 1, ∀ β ∈ Set.Icc 0 1, CombinatorialContracts.principal M β ≤ CombinatorialContracts.principal M α
+CombinatorialContracts.exists_response.{u} {ι : Type u} [Fintype ι] [DecidableEq ι] (M : CombinatorialContracts.Model ι)
+  (α : ℝ) : ∃ S, CombinatorialContracts.IsResponse M α S
+CombinatorialContracts.exists_reward_anchor.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) (S : Finset ι) (hS : 0 < M.reward S) :
+  ∃ j ∈ S,
+    0 < M.reward {j} ∧
+      M.reward {j} ≤ M.reward S ∧ M.reward S ≤ ↑(Fintype.card ι) * M.reward {j} ∧ ∀ i ∈ S, M.reward {i} ≤ M.reward {j}
+CombinatorialContracts.finite_first_appearance_bound.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι] (f : Finset ι → ℝ)
+  (hzero : f ∅ = 0) (hnonneg : ∀ (S : Finset ι), 0 ≤ f S) (hmono : Monotone f)
+  (hsub : ∀ (S T : Finset ι), f (S ∪ T) ≤ f S + f T) (k : ℕ) (a : ℕ → ℝ) (S : ℕ → Finset ι) (P : ℝ) (hP : 0 ≤ P)
+  (hend : a k = 1) (hstep : ∀ t < k, a t ≤ a (t + 1)) (hupper : ∀ t < k, a t ≤ 1)
+  (hprofit : ∀ t < k, (1 - a t) * f (S t) ≤ P) :
+  ∑ t ∈ Finset.range k, (a (t + 1) - a t) * f (S t) ≤ ↑(Fintype.card ι) * P
+CombinatorialContracts.geometric_cover_of_width {ε R b δ : ℝ} (hε : 0 < ε) (hε1 : ε < 1) (hR : 1 ≤ R) (hb : 0 ≤ b)
+  (hlo : b / R ≤ δ) (hhi : δ ≤ b) :
+  ∃ k < CombinatorialContracts.leastGridSteps (1 - ε) R + 1,
+    (1 - ε) * δ ≤ b * (1 - ε) ^ (k + 1) ∧ b * (1 - ε) ^ (k + 1) ≤ δ
+CombinatorialContracts.leastGridSteps_add_one_bound {ε R : ℝ} (hε : 0 < ε) (hε1 : ε < 1) (hR : 1 ≤ R) :
+  ↑(CombinatorialContracts.leastGridSteps (1 - ε) R + 1) ≤ Real.log R / ε + 2
+CombinatorialContracts.leastGridSteps_minimal {q R : ℝ} (he : ∃ k, q ^ k ≤ 1 / R) {j : ℕ}
+  (hj : j < CombinatorialContracts.leastGridSteps q R) : 1 / R < q ^ j
+CombinatorialContracts.leastGridSteps_one (q : ℝ) : CombinatorialContracts.leastGridSteps q 1 = 0
+CombinatorialContracts.leastGridSteps_spec {ε R : ℝ} (hε : 0 < ε) (hε1 : ε < 1) (hR : 1 ≤ R) :
+  (1 - ε) ^ CombinatorialContracts.leastGridSteps (1 - ε) R ≤ 1 / R
+CombinatorialContracts.principal_le_welfare.{u} {ι : Type u} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) (α : ℝ) : CombinatorialContracts.principal M α ≤ CombinatorialContracts.welfare M
+CombinatorialContracts.principal_nonneg.{u} {ι : Type u} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) {α : ℝ} (hα : α ≤ 1) : 0 ≤ CombinatorialContracts.principal M α
+CombinatorialContracts.response_reward_mono.{u} {ι : Type u} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) : Monotone fun α => M.reward (CombinatorialContracts.response M α)
+CombinatorialContracts.response_reward_monotone.{u} {ι : Type u} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) {α β : ℝ} {S T : Finset ι} (hαβ : α ≤ β)
+  (hS : CombinatorialContracts.IsResponse M α S) (hT : CombinatorialContracts.IsResponse M β T) :
+  M.reward S ≤ M.reward T
+CombinatorialContracts.reward_anchored_scale_of_optimal_response.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) {α : ℝ} {S : Finset ι} (hα : α ∈ Set.Icc 0 1)
+  (hS : CombinatorialContracts.IsResponse M α S)
+  (hoptimal : (1 - α) * M.reward S = CombinatorialContracts.optimalValue M)
+  (hopt : 0 < CombinatorialContracts.optimalValue M) {j : ι} (hj : j ∈ S)
+  (hmax : ∀ i ∈ S, M.reward {i} ≤ M.reward {j}) :
+  0 < M.reward {j} ∧
+    0 < CombinatorialContracts.welfare M / (↑(Fintype.card ι) ^ 2 * M.reward {j}) ∧
+      CombinatorialContracts.welfare M / (↑(Fintype.card ι) ^ 2 * M.reward {j}) ≤ 1 - α ∧
+        1 - α ≤ min 1 (CombinatorialContracts.welfare M / M.reward {j}) ∧
+          min 1 (CombinatorialContracts.welfare M / M.reward {j}) /
+              (CombinatorialContracts.welfare M / (↑(Fintype.card ι) ^ 2 * M.reward {j})) ≤
+            ↑(Fintype.card ι) ^ 2
+CombinatorialContracts.robust_source_grid_cover {ρ R b δ : ℝ} (hρ : 0 < ρ) (hρ1 : ρ < 1) (hR : 1 ≤ R) (hb : 0 ≤ b)
+  (hδ : 0 ≤ δ) (hlo : b / R ≤ δ) (hhi : δ ≤ b) :
+  ∃ k < CombinatorialContracts.leastGridSteps (1 - ρ) R + 2,
+    (1 - ρ) ^ 2 * δ ≤ b * (1 - ρ) ^ k ∧ b * (1 - ρ) ^ k ≤ (1 - ρ) * δ
+CombinatorialContracts.scaled_optimalValue.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) (scale : ℝ) (hscale : 0 < scale) :
+  CombinatorialContracts.optimalValue (CombinatorialContracts.scaledModel M scale hscale) =
+    scale * CombinatorialContracts.optimalValue M
+CombinatorialContracts.scaled_response_iff.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) (scale : ℝ) (hscale : 0 < scale) (α : ℝ) (S : Finset ι) :
+  CombinatorialContracts.IsResponse (CombinatorialContracts.scaledModel M scale hscale) α S ↔
+    CombinatorialContracts.IsResponse M α S
+CombinatorialContracts.scaled_welfare.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) (scale : ℝ) (hscale : 0 < scale) :
+  CombinatorialContracts.welfare (CombinatorialContracts.scaledModel M scale hscale) =
+    scale * CombinatorialContracts.welfare M
+CombinatorialContracts.shifted_contract_valid {q b : ℝ} {k : ℕ} (hq : 0 < q) (hq1 : q < 1) (hb : 0 ≤ b) (hb1 : b ≤ 1) :
+  0 < 1 - b * q ^ (k + 1) ∧ 1 - b * q ^ (k + 1) ≤ 1
+CombinatorialContracts.subadditive_le_sum_singletons.{u_1} {ι : Type u_1} [DecidableEq ι] (f : Finset ι → ℝ)
+  (hempty : f ∅ = 0) (hsub : ∀ (S T : Finset ι), f (S ∪ T) ≤ f S + f T) (S : Finset ι) : f S ≤ ∑ i ∈ S, f {i}
+CombinatorialContracts.supplyResponse_iff_response.{u} {ι : Type u} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) (hadd : CombinatorialContracts.HasAdditiveReward M) {α : ℝ} {S : Finset ι}
+  (hα : 0 < α) :
+  CombinatorialContracts.IsSupplyResponse M (fun i => α * M.reward {i}) S ↔ CombinatorialContracts.IsResponse M α S
+CombinatorialContracts.welfare_eq_zero_iff_optimalValue_eq_zero.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) :
+  CombinatorialContracts.welfare M = 0 ↔ CombinatorialContracts.optimalValue M = 0
+CombinatorialContracts.welfare_profit_comparison.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+  (M : CombinatorialContracts.Model ι) :
+  CombinatorialContracts.optimalValue M ≤ CombinatorialContracts.welfare M ∧
+    CombinatorialContracts.welfare M ≤ ↑(Fintype.card ι) * CombinatorialContracts.optimalValue M
+'CombinatorialContracts.Paper.theorem1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CombinatorialContracts.Paper.theorem2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CombinatorialContracts.Paper.theorem7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CombinatorialContracts.reward_anchored_scale_of_optimal_response' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'CombinatorialContracts.LowerBounds.theorem8_worst_instance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CombinatorialContracts.LowerBounds.corollary3_exact_worst_instance' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'CombinatorialContracts.Tightness.proposition9_i' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CombinatorialContracts.Tightness.proposition9_ii' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CombinatorialContracts.EqualRevenue.proposition10' depends on axioms: [propext, Classical.choice, Quot.sound]

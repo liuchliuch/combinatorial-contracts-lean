@@ -1,0 +1,177 @@
+✔ [7351/7379] Built CombinatorialContracts.ChainEnvelope (9.4s)
+✔ [7352/7379] Built CombinatorialContracts.Model (9.4s)
+✔ [7353/7379] Built CombinatorialContracts.FiniteEnvelope (11s)
+✔ [7354/7379] Built CombinatorialContracts.OracleIdentification (11s)
+⚠ [7355/7379] Built CombinatorialContracts.LowerBoundAsymptotics (12s)
+warning: CombinatorialContracts/LowerBoundAsymptotics.lean:19:41: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: CombinatorialContracts/LowerBoundAsymptotics.lean:19:51: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [7356/7379] Built CombinatorialContracts.Geometric (15s)
+warning: CombinatorialContracts/Geometric.lean:63:18: unused variable `hq1`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CombinatorialContracts/Geometric.lean:76:30: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: CombinatorialContracts/Geometric.lean:80:29: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: CombinatorialContracts/Geometric.lean:81:29: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: CombinatorialContracts/Geometric.lean:116:22: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: CombinatorialContracts/Geometric.lean:163:22: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: CombinatorialContracts/Geometric.lean:185:22: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✔ [7357/7379] Built CombinatorialContracts.EndpointRegression (10s)
+⚠ [7358/7379] Built CombinatorialContracts.Scaling (10s)
+warning: CombinatorialContracts/Scaling.lean:28:50: `mul_le_mul_left` has been deprecated: Use `mul_le_mul_iff_right₀` instead
+✔ [7359/7379] Built CombinatorialContracts.Welfare (9.4s)
+✔ [7360/7379] Built CombinatorialContracts.ChainRealization (11s)
+✔ [7361/7379] Built CombinatorialContracts.EqualRevenue (12s)
+✔ [7362/7379] Built CombinatorialContracts.Scale (6.7s)
+✔ [7363/7379] Built CombinatorialContracts.SparseSupply (6.4s)
+✔ [7364/7379] Built CombinatorialContracts.LowerBounds (9.5s)
+✔ [7365/7379] Built CombinatorialContracts.Tightness (11s)
+✔ [7366/7379] Built CombinatorialContracts.PaperScale (7.3s)
+✔ [7367/7379] Built CombinatorialContracts.SharpSparseSupply (7.2s)
+✔ [7368/7379] Built CombinatorialContracts.SupplySimulation (4.9s)
+⚠ [7369/7379] Built CombinatorialContracts.Algorithm (10s)
+warning: CombinatorialContracts/Algorithm.lean:26:4: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: CombinatorialContracts/Algorithm.lean:195:0: automatically included section variable(s) unused in theorem `CombinatorialContracts.geometricRun_record_valid`:
+  [Fintype ι]
+  [DecidableEq ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] [DecidableEq ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [7370/7379] Built CombinatorialContracts.OracleProgram (4.9s)
+warning: CombinatorialContracts/OracleProgram.lean:132:14: This simp argument is unused:
+  eval_bind
+
+Hint: Omit it from the simp argument list.
+  simp [eval, eval_b̵i̵n̵d̵,̵ ̵e̵v̵a̵l̵_̵queryRecords, geometricRun, geometricTrace, QueryRecord.query]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CombinatorialContracts/OracleProgram.lean:132:25: This simp argument is unused:
+  eval_queryRecords
+
+Hint: Omit it from the simp argument list.
+  simp [eval, eval_bind, e̵v̵a̵l̵_̵q̵u̵e̵r̵y̵R̵e̵c̵o̵r̵d̵s̵,̵ ̵geometricRun, geometricTrace, QueryRecord.query]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CombinatorialContracts/OracleProgram.lean:160:4: This simp argument is unused:
+  Nat.add_left_comm
+
+Hint: Omit it from the simp argument list.
+  simp [recordTrace_response, recordTrace_reward, recordTrace_cost, Nat.add_comm,
+      Nat.add_l̵e̵f̵t̵_̵c̵o̵m̵m̵,̵ ̵N̵at̵.̵a̵d̵d̵_̵a̵ssoc, List.count_replicate]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CombinatorialContracts/OracleProgram.lean:160:23: This simp argument is unused:
+  Nat.add_assoc
+
+Hint: Omit it from the simp argument list.
+  simp [recordTrace_response, recordTrace_reward, recordTrace_cost, Nat.add_comm,
+      Nat.add_left_comm, N̵a̵t̵.̵a̵d̵d̵_̵a̵s̵s̵o̵c̵,̵ ̵List.count_replicate]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [7371/7379] Built CombinatorialContracts.SupplyProgram (3.8s)
+⚠ [7372/7379] Built CombinatorialContracts.Robustness (12s)
+warning: CombinatorialContracts/Robustness.lean:238:0: automatically included section variable(s) unused in theorem `CombinatorialContracts.robustAlgorithm_query_count`:
+  [DecidableEq ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [7373/7379] Built CombinatorialContracts.LowerBoundProgram (4.1s)
+✔ [7374/7379] Built CombinatorialContracts.LowerBoundStrategy (4.7s)
+⚠ [7375/7379] Built CombinatorialContracts.RobustOracleProgram (4.0s)
+warning: CombinatorialContracts/RobustOracleProgram.lean:37:62: This simp argument is unused:
+  Nat.add_left_comm
+
+Hint: Omit it from the simp argument list.
+  simp [bind, evalIndexed, ih, Nat.add_assoc, Nat.add_comm,̵ ̵N̵a̵t̵.̵a̵d̵d̵_̵l̵e̵f̵t̵_̵c̵o̵m̵m̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CombinatorialContracts/RobustOracleProgram.lean:55:24: This simp argument is unused:
+  Nat.add_assoc
+
+Hint: Omit it from the simp argument list.
+  simp [queryRecords, evalIndexed_bind, ih, evalIndexed, recordTrace, List.mapIdx_cons,
+  ̲  ̲ ̲ ̲ ̲ ̲N̵a̵t̵.̵a̵d̵d̵_̵a̵s̵s̵o̵c̵,̵ ̵Nat.add_comm, Nat.add_left_comm]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CombinatorialContracts/RobustOracleProgram.lean:66:6: This simp argument is unused:
+  List.count_replicate
+
+Hint: Omit it from the simp argument list.
+  simp [readSingletons, evalIndexed, evalIndexed_bind, ih, List.replicate_succ,̵
+  ̵ ̵ ̵ ̵ ̵ ̵ ̵L̵i̵s̵t̵.̵c̵o̵u̵n̵t̵_̵r̵e̵p̵l̵i̵c̵a̵t̵e̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CombinatorialContracts/RobustOracleProgram.lean:107:23: This simp argument is unused:
+  evalIndexed_bind
+
+Hint: Omit it from the simp argument list.
+  simp [evalIndexed, evalIndexed_queryRecord, robustAlgorithm, robustTrace,
+  ̵  ̵ ̵ ̵QueryRecord.query,
+  ̲ e̵v̵a̵l̵I̵n̵d̵e̵x̵e̵d̵_̵b̵i̵n̵d̵,̵  ̲ ̲evalIndexed_queryRecords]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CombinatorialContracts/RobustOracleProgram.lean:107:41: This simp argument is unused:
+  evalIndexed_queryRecords
+
+Hint: Omit it from the simp argument list.
+  simp [evalIndexed, evalIndexed_queryRecord, robustAlgorithm, robustTrace, QueryRecord.query,
+  ̲  ̲ ̲ ̲e̵v̵a̵l̵I̵n̵d̵e̵x̵e̵d̵_̵b̵i̵n̵d̵,̵ ̵e̵v̵a̵l̵I̵n̵d̵e̵x̵e̵d̵_̵q̵u̵e̵r̵y̵R̵e̵c̵o̵r̵d̵s̵]̵e̲v̲a̲l̲I̲n̲d̲e̲x̲e̲d̲_̲b̲i̲n̲d̲]̲
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CombinatorialContracts/RobustOracleProgram.lean:109:18: This simp argument is unused:
+  List.append_assoc
+
+Hint: Omit it from the simp argument list.
+  simp [evalIndexed, evalIndexed_bind, evalIndexed_queryRecords, Nat.add_comm,
+  ̲  ̲ ̲ ̲L̵i̵s̵t̵.̵a̵p̵p̵e̵n̵d̵_̵a̵s̵s̵o̵c̵,̵ ̵QueryRecord.query]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CombinatorialContracts/RobustOracleProgram.lean:123:18: This simp argument is unused:
+  Nat.add_left_comm
+
+Hint: Omit it from the simp argument list.
+  simp [recordTrace_response, recordTrace_reward, recordTrace_cost, Nat.add_comm,
+  ̲  ̲ ̲ ̲N̵a̵t̵.̵a̵d̵d̵_̵l̵e̵f̵t̵_̵c̵o̵m̵m̵,̵ ̵Nat.add_assoc, List.count_replicate]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CombinatorialContracts/RobustOracleProgram.lean:123:37: This simp argument is unused:
+  Nat.add_assoc
+
+Hint: Omit it from the simp argument list.
+  simp [recordTrace_response, recordTrace_reward, recordTrace_cost,
+  ̵  ̵ ̵ ̵Nat.add_comm,
+  ̲  ̲ ̲ ̲Nat.add_left_comm, N̵a̵t̵.̵a̵d̵d̵_̵a̵s̵s̵o̵c̵,̵ ̵List.count_replicate]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [7376/7379] Built CombinatorialContracts.MainLowerBound (6.2s)
+warning: CombinatorialContracts/MainLowerBound.lean:97:21: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: CombinatorialContracts/MainLowerBound.lean:415:61: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: CombinatorialContracts/MainLowerBound.lean:415:75: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✔ [7377/7379] Built CombinatorialContracts.PaperStatements (9.4s)
+✔ [7378/7379] Built CombinatorialContracts (3.7s)
+Build completed successfully (7379 jobs).
