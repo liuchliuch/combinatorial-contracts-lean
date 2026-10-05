@@ -1,0 +1,14 @@
+{
+  "challenge_module": "Audit.NegativeStatements",
+  "solution_module": "Audit.NegativeAxiom",
+  "theorem_names": [
+    "CombinatorialContractsAudit.claim_008"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "enable_nanoda": false
+}
